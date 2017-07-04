@@ -1,0 +1,298 @@
+#LangLabel:=Português
+
+#Initial System Messages
+Error: =/= Erro:
+Warning: =/= Aviso:
+Success: =/= Sucesso:
+Couldn't find DataBase! =/= N&atilde;o foi poss&iacute;vel encontrar o Banco de Dados!
+Couldn't write session! =/= N&atilde;o foi poss&iacute;vel gravar a sess&atilde;o!
+Couldn't connect to the DataBase! =/= N&atilde;o foi poss&iacute;vel se conectar ao Banco de Dados!
+Can't write to log file! =/= N&atilde;o foi poss&iacute;vel gravar no arquivo de log!
+Class Paths not set! =/= Classe paths não configurada!
+unknown =/= desconhecido
+
+#Login Messages
+session =/= sessão
+successfully signed out =/= logoff efetuado com sucesso
+successfully signed in =/= login efetuado com sucesso
+error invalid username/password =/= erro usuário/senha inválido
+Invalid Username or Password! =/= Usuário ou Senha inválidos!
+Class Login not set! =/= Classe login não configurada!
+Username =/= Usuário
+Password =/= Senha
+Sign In =/= Entrar
+
+#All pages messages
+You do not have permission to see this page! =/= Você não permissão para ver esta página!
+The asynchronous request has failed! =/= A requisição assíncrona falhou!
+Class PgSQL not set! =/= Classe PgSQL não configurada!
+home =/= início
+list =/= listar
+register =/= cadastrar
+tools =/= ferramentas
+settings =/= configurações
+Under Construction! =/= Em Construção!
+Full =/= Completo
+Administrator =/= Administrador
+Technician =/= Técnico
+Home =/= Início
+List =/= Listar
+Customers =/= Clientes
+Technicians =/= Técnicos
+Administrators =/= Administradores
+Equipments =/= Equipamentos
+Register =/= Cadastrar
+Customer =/= Cliente
+Equipment =/= Equipamento
+Tools =/= Ferramentas
+Manage Plans =/= Gerenciar Planos
+Help Desk =/= Balcão de Ajuda
+Settings =/= Configurações
+System =/= Sistema
+Form Fields =/= Campos de Formulários
+Provisioning =/= Provisionamento
+Sign Out =/= Sair
+Language =/= Idioma
+Profile =/= Perfil
+Help =/= Ajuda
+Contacts =/= Contatos
+Version =/= Versão
+Developers =/= Desenvolvedores
+
+#Home page messages
+Registrations =/= Cadastros
+This Month =/= Este Mês
+On Line =/= Conectados
+Off Line =/= Desconectados
+Mbits Sold =/= Mbits Vendidos
+Open Tickets =/= Tickets Abertos
+Main Throughput =/= Tráfego Principal
+No throughput data at monitor table! =/= Sem dados de tráfego na tabela de monitoramento!
+Users per Plan =/= Usuários por Plano
+No plans registered! =/= Sem planos registrados!
+Users Ranking =/= Ranking de Usuários
+No accounting info found! =/= Sem informação de contas encontradas!
+1st =/= 1º
+2nd =/= 2º
+3rd =/= 3º
+4th =/= 4º
+5th =/= 5º
+6th =/= 6º
+7th =/= 7º
+8th =/= 8º
+
+#Dates Names
+Sun =/= Dom
+Mon =/= Seg
+Tue =/= Ter
+Wed =/= Qua
+Thu =/= Qui
+Fri =/= Sex
+Sat =/= Sab
+Sunday =/= Domingo
+Monday =/= Segunda-Feira
+Tuesday =/= Terça-Feira
+Wednesday =/= Quarta-Feira
+Thursday =/= Quinta-Feira
+Friday =/= Sexta-Feira
+Saturday =/= Sábado
+January =/= Janeiro
+February =/= Fevereiro
+March =/= Março
+April =/= Abril
+May =/= Maio
+June =/= Junho
+July =/= Julho
+August =/= Agosto
+September =/= Setembro
+October =/= Outubro
+November =/= Novembro
+December =/= Dezembro
+
+#List page messages
+Add =/= Adicionar
+Search =/= Pesquisar
+Full Name =/= Nome Completo
+Register Date =/= Data de Cadastro
+Plan =/= Plano
+Name =/= Nome
+Location =/= Localização
+Brand =/= Marca
+IP Address =/= Endereço IP
+No data available in the table! =/= Sem dados na tabela!
+Unauthorized Query! =/= Requisição não autorizada!
+connected =/= conectado
+disconnected =/= desconectado
+Invalid Query! =/= Requisição Inválida!
+Show Details =/= Exibir Detalhes
+Access Device =/= Acessar Dispositivo
+Details =/= Detalhes
+Edit =/= Editar
+History =/= Histórico
+Support =/= Suporte
+Open Ticket =/= Abrir Ticket
+Enable =/= Ativar
+Disable =/= Desativar
+Delete =/= Remover
+Group =/= Grupo
+Service =/= Serviço
+Port =/= Porta
+Are you sure you want to delete: =/= Você tem certeza que quer remover:
+You do not have permission to delete! =/= Você não tem permissão para remover!
+Equipment not deleted! =/= Equipamento não removido!
+Equipment successfully deleted! =/= Equipamento removido com sucesso!
+Couldn't locate username! =/= Não pôde encontrar o usuário!
+Customer successfully deleted! =/= Cliente removido com sucesso!
+User successfully deleted! =/= Usuário removido com sucesso!
+Couldn't locate user data! =/= Não pôde encontrar dados do usuário!
+Equipment successfully edited! =/= Equipamento editado com sucesso!
+Customer successfully edited! =/= Cliente editado com sucesso!
+User successfully edited! =/= Usuário editado com sucesso!
+##Template Form Fields
+City =/= Cidade
+Address, N =/= Endereço, nº
+Region =/= Bairro
+Phone =/= Telefone
+Birthday =/= Data de Nascimento
+
+#Registration page messages
+Please Wait ... =/= Aguarde ...
+Could not acquire remote IP! =/= Não pôde obter IP remoto!
+The Session user is not currently authenticated on the network! =/= O usuário desta sessão não está atualmente autenticado na rede!
+The Session user is not the same as the one authenticated on the network! =/= O usuário desta sessão não é o mesmo que o atualmente autenticado na rede!
+Unknown Equipment =/= Equipamento Desconhecido
+Provide authentication information =/= Informe dados de autenticação
+Send =/= Enviar
+Service not yet supported! =/= Serviço ainda não suportado!
+SSH2 Extension not found! =/= Extensão SSH2 não encontrada!
+Invalid Host Name! =/= Nome de host inválido
+Connection Failed! =/= Conexão Falhou!
+Fingerprint Failed! =/= Troca de chaves Falhou!
+Authentication Failed! =/= Autenticação Falhou!
+Command Execution Failed! =/= Execução do Comando Falhou!
+Could not open request! Try again later. =/= Não pôde completar a requisição! Tente novamente mais tarde.
+Could not find session user! =/= Não pôde encontrar o usuário desta sessão!
+No Plan =/= Sem Plano
+Connection =/= Conexão
+Main =/= Principal
+Confirmation =/= Confirmação
+There are empty inputs in the form. =/= Há campos em branco no formulário.
+These inputs are optional. =/= Estes campos são opcionais.
+Fill them =/= Preencher eles
+Leave them empty =/= Deixar eles em branco
+Next =/= Próximo
+Previous =/= Anterior
+Finish =/= Finalizar
+show / hide =/= mostrar / ocultar
+Picture =/= Foto
+Send File =/= Enviar Arquivo
+Invalid Name! =/= Nome Inválido!
+Invalid Username! =/= Usuário Inválido!
+Username Already Taken! =/= Usuário já Utilizado!
+Invalid Password! =/= Senha Inválida!
+Error: HTML5 is not supported! =/= Erro: HTML5 não suportado!
+Error: File is not an image! =/= Erro: Arquivo não é uma imagem!
+Error: Invalid image format! =/= Erro: Formato de imagem inválido!
+Error: Upload path not found! =/= Erro: Caminho de upload não encontrado!
+Error: Upload path not writeable! =/= Erro: Caminho de upload não gravável!
+Error: Picture couldn't be saved! =/= Erro: Foto não pôde ser salva!
+No custom form fields found! You should really add them before registering someone! =/= Sem campos de fomrmulário customizados encontrados! Você realmente deveria adicioná-los antes de registrar alguém!
+Confirm the above data! =/= Confirme os dados acima!
+Check the confirmation box! =/= Marque a caixa de confirmação!
+Technician couldn't be added! =/= Técnico não pôde ser adicionado!
+Administrator couldn't be added! =/= Administrador não pôde ser adicionado!
+added with success! =/= adicionado com sucesso!
+Add another =/= Adicionar outro
+Group Name =/= Nome de Grupo
+Invalid Group Name! =/= Nome de Grupo Inválido!
+MAC Address =/= Endereço de MAC
+Invalid MAC Address! =/= Endereço de MAC Inválido!
+Invalid Location! =/= Localização Inválida!
+Comments =/= Observações
+
+#Customer Tools Messages
+ONT Autofind =/= Autobusca ONT
+Serial Number =/= Número de Série
+Customer Select =/= Seleção de Cliente
+Nothing Selected =/= Nada Selecionado
+OLT not Found! =/= OLT não encontrada!
+
+#Manage Plans page messages
+Price =/= Preço
+Media =/= Via
+Fiber =/= Fibra
+Assured =/= Garantido
+Plan could not be saved! =/= Plano não pôde ser salvo!
+Are you sure you want to delete this plan: =/= Você tem certeza que quer remover este plano:
+You cannot delete the plan: =/= Você não pode remover o plano:
+The amount of customers using this plan is: =/= A quantidade de clientes usando este plano é:
+Plan could not be deleted! =/= Plano não pôde ser removido!
+
+#Helpdesk page messages
+Closed Tickets =/= Tickets Fechados
+Update Ticket =/= Atualizar Ticket
+Return =/= Voltar
+Could not open ticket! =/= Não pôde abrir ticket!
+Ticket opened with success! =/= Ticket aberto com sucesso!
+Could not add message to the ticket! =/= Não pôde adicionar a mensagem ao ticket!
+Ticket updated with success! =/= Ticket atualizado com sucesso!
+Could not update ticket! =/= Não pôde atualizar ticket!
+No Customer =/= Sem Cliente
+Category =/= Categoria
+Priority =/= Prioridade
+Subject =/= Assunto
+Deadline =/= Prazo Final
+Message =/= Mensagem
+Cancel =/= Cancelar
+Save =/= Salvar
+Close Ticket! =/= Fechar Ticket!
+History =/= Histórico
+Technical - Internal =/= Técnico - Interno
+Technical - Install =/= Técnico - Instalação
+Technical - System =/= Técnico - Sistema
+Technical - Infrastructure =/= Técnico - Infraestrutura
+Technical - Customer =/= Técnico - Cliente
+Financial =/= Financeiro
+None =/= Nenhuma
+Non-Important =/= Não Importante
+Standard =/= Padrão
+Important =/= Importante
+Urgent =/= Urgente
+Open =/= Aberto
+Closed =/= Fechado
+Load More =/= Carregar Mais
+No items so far! Use the Add button. =/= Sem itens até agora! Use o botão Adicionar
+Couldn't update message! =/= Não pôde atualizar a mensagem!
+Are you sure you want to delete this message? =/= Você tem certeza que deseja remover esta mensagem?
+This action is irreversible. =/= Esta ação é irreversível.
+Couldn't delete message! =/= Não pôde remover a mensagem!
+
+#Settings page messages
+Add Form Field =/= Adicionar Campo de Formulário
+Add Provisioning =/= Adicionar Provisionamento
+Session Timeout =/= Tempo de Sessão
+Main Chart =/= Gráfico Principal
+Data Points =/= Pontos de Dados
+Date Format =/= Formato da Data
+Redirect URL =/= URL Direcionada
+Currency =/= Moeda
+Invalid Value! =/= Valor Inválido
+SSH Port =/= Porta SSH
+MAC Prefix =/= Prefixo MAC
+Title =/= Título
+Sequence =/= Sequência
+Mask =/= Máscara
+Validation =/= Validação
+Ticket Categories =/= Categorias de Ticket
+Ticket Priorities =/= Prioridades de Ticket
+Add Ticket Category =/= Adicionar Categoria de Ticket
+Add Ticket Priority =/= Adicionar Prioridade de Ticket
+Color =/= Cor
+Change Color =/= Alterar Cor
+Nothing to do! =/= Nada a ser feito!
+Nothing has changed! =/= Nada foi alterado!
+Are you sure you want to delete this field: =/= Você tem certeza que quer remover este campo:
+The setting could not be not deleted! =/= A configuração não pôde ser removida!
+The setting could not be saved! =/= A configuração não pôde ser salva!
+Name too short! =/= Nome muito curto!
+Name already exists! =/= Nome já existe!
