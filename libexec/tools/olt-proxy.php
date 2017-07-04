@@ -44,7 +44,20 @@
 					$ont_array[] = array("input" => $next_ont_input, "port" => $next_ont_port, "sn" => $next_ont_sn);
 				} echo json_encode($ont_array);
 			break;
-			default: echo "NO ACTION"; break;
+			case 'activate':
+				if(!isset($_POST['type']) || !isset($_POST['ont_port']) || !isset($_POST['ont_sn'])) die();
+				if(!isset($_POST['customer_id']) || !isset($_POST['customer_description'])) die();
+				$ont_port = intval($_POST['ont_port']);
+				$ont_sn = substr(trim(str_replace(' ', '', $_POST['ont_sn'])), 0, 16);
+				$ont_id = 1;//intval($_POST['customer_id']);
+				$ont_desc = $_POST['customer_description'];
+				$ssh_conn->shell("interface gpon 0/1");
+				$ssh_conn->shell("ont add $ont_port $ont_id sn-auth $ont_sn omci ont-lineprofile-name atto-ppp ont-srvprofile-name atto-ppp desc $ont_desc");
+				if($_POST['type'] == 'Bridge') $ssh_conn->shell("ont port native-vlan $ont_port $ont_id eth 1 vlan 2000 priority 4");
+				$ssh_conn->shell("quit");
+				$ssh_conn->shell("service-port $ont_id vlan 2000 gpon 0/1/$ont_port ont $ont_id gemport 0 multi-service user-vlan 2000 tag-transform translate inbound traffic-table index 6 outbound traffic-table index 6");
+				$_msg->success("ONT activated as $_POST[type]!");
+			break;
 		} $ssh_conn->close();
 	}
 ?>

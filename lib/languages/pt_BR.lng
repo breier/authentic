@@ -216,6 +216,12 @@ Serial Number =/= Número de Série
 Customer Select =/= Seleção de Cliente
 Nothing Selected =/= Nada Selecionado
 OLT not Found! =/= OLT não encontrada!
+ONT Activate =/= Ativar ONT
+ONT Activate PPPoE =/= Ativar ONT PPPoE
+ONT Activate Bridge =/= Ativar ONT Bridge
+Result =/= Resultado
+ONT activated as PPPoE! =/= ONT ativada como PPPoE!
+ONT activated as Bridge! =/= ONT ativada como Bridge!
 
 #Manage Plans page messages
 Price =/= Preço
