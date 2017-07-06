@@ -711,6 +711,12 @@ h5 + div>input[type="search"] {
 
 /* --- Everything for Tools Pages --- */
 
+/*** ONT activation adjustments ***/
+#name_select .control { margin: 10px 0; }
+#name_select + div button { margin: 0 5px 10px; }
+@media (max-width: 480px) {
+	#name_select>div>label { display: none; }
+}
 /*** Helpdesk Tickets List as simple calendar ***/
 .tickets-header, .tickets-list { text-align: left; }
 .tickets-list:last-of-type { border-bottom: solid 1px #DDD; }

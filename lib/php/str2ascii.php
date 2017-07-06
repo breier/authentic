@@ -13,6 +13,6 @@
 		$replacements = array('a','e','i','o','u','a','e','i','o','u','a','e','i','o','u','a','e','i','o','u','a','o','n','c','_','_','a','o','o');
 		$string = preg_replace($special_chars, $replacements, mb_strtolower($string, 'UTF-8'));
 	// Returning The Lower Case ASCII string
-		return preg_replace('/[^a-z0-9_]/i', '', $string);
+		return preg_replace('/[^a-z0-9_.]/i', '', $string);
 	}
 ?>

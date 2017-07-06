@@ -115,6 +115,16 @@ CREATE TABLE at_plans (
 	price real not NULL
 );
 
+CREATE TABLE at_onts (
+	service_port integer PRIMARY KEY NOT NULL,
+	gpon_slot text NOT NULL,
+	gpon_port integer NOT NULL,
+	ont_id integer NOT NULL,
+	ont_sn text NOT NULL,
+	ont_wan_mode text NOT NULL,
+	date timestamp without time zone DEFAULT now() NOT NULL
+);
+
 CREATE TABLE at_userdata (
    id serial PRIMARY KEY NOT NULL,
    date timestamp without time zone DEFAULT now() NOT NULL,

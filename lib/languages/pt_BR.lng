@@ -213,7 +213,8 @@ Comments =/= Observações
 #Customer Tools Messages
 ONT Autofind =/= Autobusca ONT
 Serial Number =/= Número de Série
-Customer Select =/= Seleção de Cliente
+Building =/= Prédio
+Building Name too short! =/= Nome do Prédio muito curto!
 Nothing Selected =/= Nada Selecionado
 OLT not Found! =/= OLT não encontrada!
 ONT Activate =/= Ativar ONT

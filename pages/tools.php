@@ -32,23 +32,41 @@
 										</thead>
 										<tbody></tbody>
 									</table>
-								</div><div class="col-lg-4 col-md-6 col-sm-6 col-ms-9 col-xs-12 text-center">
-									<h4><?= $_msg->lang("Customer Select"); ?></h4>
-									<select id="customer" data-live-search="true" class="selectpicker" onchange="tools_ontCustomerSelect(this.value);" multiple data-max-options=1 disabled>
+								</div><div id="name_select" class="col-lg-4 col-md-6 col-sm-6 col-ms-9 col-xs-12 form-horizontal text-center">
+									<div class="form-group ">
+										<label class="control-label col-md-3 col-sm-3 col-ms-3 col-xs-12" for="customer">
+											<?= $_msg->lang("Customer") ."\n"; ?>
+										</label>
+										<div class="col-md-9 col-sm-9 col-ms-9 col-xs-12">
+											<input type="hidden" name="customer" />
+											<select id="customer" data-live-search="true" class="selectpicker form-control col-xs-12" onchange="tools_ontCustomerSelect(this.value);" multiple data-max-options=1 disabled>
 <?php // List Customers
-	$_pgobj->query('SELECT id, substring(data from \':"name";s:[0-9]+:"([^"]+)";\') AS name, username FROM at_userdata ORDER BY name');
+	$query = 'SELECT aud.id, substring(aud.data from \':"name";s:[0-9]+:"([^"]+)";\') AS name, rug.username';
+	$query.= ' FROM at_userdata aud, radusergroup rug WHERE aud.username = rug.username';
+	$query.= ' AND rug.groupname NOT IN (\'full\', \'admn\', \'tech\') ORDER BY name';
+	$_pgobj->query($query);
 	for($i=0; $i<$_pgobj->rows; $i++) {
-		echo str_repeat("\t", 10) .'<option value="'. $_pgobj->result[$i]['id'] .':';
+		echo str_repeat("\t", 12) .'<option value="'. $_pgobj->result[$i]['id'] .':';
 		echo substr($_pgobj->result[$i]['username'], 0, strpos($_pgobj->result[$i]['username'], '@'));
 		echo '">'. $_pgobj->result[$i]['name'] ."</option>\n";
 	}
 ?>
-									</select>
+											</select>
+										</div>
+									</div><div class="form-group duplicated">
+										<label class="control-label col-md-3 col-sm-3 col-ms-3 col-xs-12" for="building">
+											<?= $_msg->lang("Building") ."\n"; ?>
+										</label>
+										<div class="col-md-9 col-sm-9 col-ms-9 col-xs-12">
+											<input type="text" id="building" placeholder="<?= $_msg->lang('Name'); ?>" oninput="tools_ontBuildingSelect(this.value);" data-error="<?= $_msg->lang('Building Name too short!'); ?>" class="form-control col-xs-12" disabled />
+										</div>
+									</div>
 								</div><div class="col-lg-4 col-md-6 col-sm-6 col-ms-9 col-xs-12 text-center">
 									<h4><?= $_msg->lang("ONT Activate"); ?></h4>
 									<input id="customer_description" type="hidden" />
 									<input id="customer_id" type="hidden" />
-									<input id="ont_port" type="hidden" />
+									<input id="gpon_slot" type="hidden" />
+									<input id="gpon_port" type="hidden" />
 									<input id="ont_sn" type="hidden" />
 									<button id="activate_pppoe" type="button" class="btn btn-primary" onclick="tools_ontActivate('PPPoE');" disabled><?= $_msg->lang("ONT Activate PPPoE"); ?></button>
 									<button id="activate_bridge" type="button" class="btn btn-primary" onclick="tools_ontActivate('Bridge');" disabled><?= $_msg->lang("ONT Activate Bridge"); ?></button>
@@ -63,6 +81,19 @@
 										$(document).ajaxStart(function (){ $('.fa-spin').css("visibility", 'visible');})
 														.ajaxStop(function (){ $('.fa-spin').css("visibility", 'hidden'); });
 										$(".selectpicker").selectpicker({ noneSelectedText: '<?= $_msg->lang("Nothing Selected"); ?>' });
+									// Name Select Switch
+										list_handleDuplicates("#name_select");
+										$("#name_select .control").find("div input").off("change").on("change", function () {
+											var firstElement = $(this).parent("div").parent("div").next("div");
+											var secondElement = $(this).parent("div").parent("div").next("div").next("div");
+											if($(this).val() == $(firstElement).find("input").attr("name")) {
+												$(firstElement).removeClass("duplicated").addClass("flipInX animated").find("input").focus();
+												$(secondElement).addClass("duplicated").removeClass("flipInX animated").find("input");
+											} else {
+												$(firstElement).addClass("duplicated").removeClass("flipInX animated").find("input");
+												$(secondElement).removeClass("duplicated").addClass("flipInX animated").find("input").focus();
+											}
+										});
 									});
 								</script>
 							</div>
