@@ -16,7 +16,8 @@
 			if($i == ($offset + 10)) break; // 10 rows per page
 			$info_array = $_pgobj->fetch_array($i);
 			if($list_type != 'equipment') {
-				$disabled = ($info_array['passtype']=='User-Password') ? (TRUE) : (FALSE);
+				$groupname_array = json_decode($info_array['groupname']);
+				$disabled = (array_search('disabled', $groupname_array) !== FALSE) ? (TRUE) : (FALSE);
 				$ip_address = $info_array['framedipaddress'];
 			} else {
 				if($info_array['equipment_name'] == NULL) $info_array['equipment_name'] = $_msg->lang("unknown");
@@ -25,16 +26,24 @@
 				$ip_address = $info_array['ip_address'];
 			}
 // ----- Display columns ----- //
-			$td_first = '<a href="javascript:void(0);" class="ellipsis" onclick="list_details('. $info_array['id'];
+			$td_first = '<a href="javascript:void(0);" onclick="list_details('. $info_array['id'];
 			$td_first.= ');" title="'. $_msg->lang('Show Details') .'" ';
-			$td_first.= ($disabled) ? ('class="disabled">') : ('>');
+			$td_first.= ($disabled) ? ('class="ellipsis disabled">') : ('class="ellipsis">');
 			$td_first.= ($list_type == 'equipment') ? ($info_array['equipment_name']) : ($info_array['full_name']);
 			$td_first.= '</a>';
 
 			$date_format = (isset($_settings->system['Date Format'])) ? ($_settings->system['Date Format']) : ('m/d/Y');
 			$td_second = ($list_type == 'equipment') ? ($info_array['location']) : (date($date_format, strtotime($info_array['date'])));
 			$td_third = ($list_type == 'equipment') ? ($info_array['brand_name']) : (strtoupper($info_array['mac_address'])); // iedea for technicians - last ticket info 2 cols
-			$td_fourth = ($list_type == 'equipment') ? ($info_array['ip_address']) : (($list_type=='inet')?($info_array['groupname']):($info_array['username']));
+
+			if($list_type == 'equipment') $td_fourth = $info_array['ip_address'];
+			else {
+				if($list_type=='inet') {
+					$priority_zero_index = array_search(0, json_decode($info_array['priority']));
+					if(!$priority_zero_index) $priority_zero_index = 0;
+					$td_fourth = $groupname_array[$priority_zero_index];
+				} else $td_fourth = $info_array['username'];
+			}
 			if(!filter_var($ip_address, FILTER_VALIDATE_IP) === false) {
 				$td_status = "<a href=\"http://$ip_address/\" title=\"". $_msg->lang("Access Device");
 				$td_status.= "\" target=\"_blank\">". $_msg->lang("connected") ."</a>";

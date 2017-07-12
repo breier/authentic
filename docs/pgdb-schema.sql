@@ -33,11 +33,6 @@ CREATE FUNCTION save_deleted() RETURNS trigger
    RETURN OLD;
 END;$$;
 
-CREATE VIEW at_check AS
-   SELECT rcp.username, rcp.value AS password, rcp.attribute AS passtype, rcm.value AS mac_address
-   FROM (radcheck rcp LEFT JOIN radcheck rcm ON rcp.username = rcm.username AND rcm.attribute = 'Calling-Station-Id')
-   WHERE (rcp.attribute IN ('Cleartext-Password', 'User-Password')) ORDER BY rcp.username;
-
 CREATE TABLE at_equipments (
    id serial PRIMARY KEY NOT NULL,
    date timestamp without time zone DEFAULT now() NOT NULL,
@@ -148,10 +143,9 @@ CREATE TABLE at_userdata_deleted (
 );
 
 CREATE VIEW at_technicians AS
-   SELECT at_userdata.id, "substring"(at_userdata.data, ':"name";s:[0-9]+:"([^"]+)";') AS name
+   SELECT id, "substring"(data, ':"name";s:[0-9]+:"([^"]+)";') AS name
    FROM at_userdata
-   WHERE (at_userdata.username IN (SELECT radusergroup.username FROM radusergroup
-      WHERE radusergroup.groupname IN ('full', 'admn', 'tech')))
+   WHERE (username IN (SELECT username FROM at_userauth WHERE groupname && ARRAY['admn', 'tech'] AND NOT groupname && ARRAY['disabled']))
    UNION SELECT 0 AS id, 'unknown' AS name;
 
 CREATE VIEW at_duplicated_active_accounts AS
@@ -161,9 +155,16 @@ CREATE VIEW at_duplicated_active_accounts AS
    WHERE (accounting.dup > 1);
 
 CREATE VIEW at_framedipaddress_accounts AS
-   SELECT rug.username, ra.framedipaddress
-   FROM (radusergroup rug LEFT OUTER JOIN radacct ra ON rug.username = ra.username AND ra.acctstoptime IS NULL)
-   WHERE rug.groupname <> 'full' ORDER BY rug.username;
+   SELECT aua.username, ra.framedipaddress
+   FROM at_userauth aua LEFT OUTER JOIN radacct ra ON aua.username = ra.username AND ra.acctstoptime IS NULL
+   WHERE NOT aua.groupname && ARRAY['full'] ORDER BY aua.username;
+
+CREATE VIEW at_userauth AS
+	WITH rap AS (SELECT username, "value" AS password FROM radcheck WHERE attribute = 'Cleartext-Password'),
+	ram AS (SELECT username, "value" AS mac_address FROM radcheck WHERE attribute = 'Calling-Station-Id')
+	SELECT rug.username, array_agg(rug.groupname) AS groupname, array_agg(rug.priority) AS priority, rap.password, ram.mac_address
+	FROM radusergroup rug LEFT JOIN rap ON rug.username = rap.username LEFT OUTER JOIN ram ON rap.username = ram.username
+	GROUP BY rug.username, ram.mac_address, rap.password;
 
 CREATE TRIGGER save_customers BEFORE DELETE ON at_userdata FOR EACH ROW EXECUTE PROCEDURE save_deleted();
 CREATE TRIGGER at_date_session_update BEFORE UPDATE ON at_session FOR EACH ROW EXECUTE PROCEDURE at_date_update();

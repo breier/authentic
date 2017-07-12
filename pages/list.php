@@ -124,18 +124,28 @@
 												<i class="fa fa-bars"></i>
 											</button>
 											<ul class="dropdown-menu">
-												<li><a id="details_history" href="javascript:void(0);"><i class="fa fa-book"></i> <?= $_msg->lang("History"); ?></a></li>
+												<li><a id="details_history" href="javascript:void(0);">
+													<i class="fa fa-book"></i> <?= $_msg->lang("History"); ?></a>
+												</li>
 <?php	if($list_type == 'inet') { ?>
-												<li><a id="details_support" href="javascript:void(0);"><i class="fa fa-wrench"></i> <?= $_msg->lang("Support"); ?></a></li>
+												<li><a id="details_support" href="javascript:void(0);">
+													<i class="fa fa-wrench"></i> <?= $_msg->lang("Support"); ?></a>
+												</li>
 <?php	} if($list_type == 'inet') { ?>
 												<li role="separator" class="divider"></li>
-												<li><a id="details_ticket" href="javascript:void(0);"><i class="fa fa-tags"></i> <?= $_msg->lang("Open Ticket"); ?></a></li>
+												<li><a id="details_ticket" href="javascript:void(0);">
+													<i class="fa fa-tags"></i> <?= $_msg->lang("Open Ticket"); ?></a>
+												</li>
 <?php	} if($_session->groupname != 'tech') {
-			if($_session->groupname != 'equipment') { ?>
+			if($list_type != 'equipment') { ?>
 	 											<li role="separator" class="divider"></li>
-												<li><a id="details_disable" data-enable="<?= $_msg->lang('Enable'); ?>" href="javascript:void(0);"><i class="fa fa-lock"></i> <?= $_msg->lang("Disable"); ?></a></li>
+												<li><a id="details_disable" data-enable="<?= $_msg->lang('Enable'); ?>" data-disable="<?= $_msg->lang('Disable'); ?>" href="javascript:void(0);">
+													<i class="fa fa-lock"></i> <span><?= $_msg->lang("Disable"); ?></span></a>
+												</li>
 <?php		} ?>
-												<li><a id="details_delete" href="javascript:void(0);"><i class="fa fa-trash"></i> <?= $_msg->lang("Delete"); ?></a></li>
+												<li><a id="details_delete" href="javascript:void(0);">
+													<i class="fa fa-trash"></i> <?= $_msg->lang("Delete"); ?></a>
+												</li>
 <?php	} ?>
 											</ul>
 										</div>

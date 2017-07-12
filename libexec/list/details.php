@@ -18,7 +18,7 @@
 			$plans_array[$_pgobj->result[$i]['name']] = $plan_string;
 		}
 		// --- Filling Technician Array
-		$_pgobj->query("SELECT * FROM at_technicians");
+		$_pgobj->query("SELECT * FROM at_technicians ORDER BY id");
 		$techs_array = array();
 		for ($i=0; $i<$_pgobj->rows; $i++)
 			$techs_array[$_pgobj->result[$i]['id']] = ($_pgobj->result[$i]['name'] == 'unknown') ? (ucfirst($_msg->lang('unknown'))) : ($_pgobj->result[$i]['name']);
@@ -30,7 +30,11 @@
 				$details_array = array_merge($details_array, unserialize($details_result[$i]['data']));
 				if($list_type=='inet') {
 					if($details_array['higher_name'] == 'unknown') $details_array['higher_name'] = $_msg->lang("unknown");
-				}
+				} $groupname_array = json_decode($details_array['groupname']);
+				if(array_search('disabled', $groupname_array) !== FALSE) echo '<input type="hidden" id="user_disabled" value="true" />';
+				$priority_zero_index = array_search(0, json_decode($details_array['priority']));
+				if(!$priority_zero_index) $priority_zero_index = 0;
+				$details_array['groupname'] = $groupname_array[$priority_zero_index];
 			} elseif($details_array['equipment_name'] == NULL) $details_array['equipment_name'] = $_msg->lang("unknown");
 // ----- Prepare to fill the modal ----- //
 			if($list_type == 'equipment') {

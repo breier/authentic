@@ -529,6 +529,7 @@ h5 + div>input[type="search"] {
 	border-top: 1px solid rgba(38, 185, 154, 0.2);
 	border-bottom: 1px solid rgba(38, 185, 154, 0.2);
 }
+#users_table tbody tr.disabled, #users_table tbody tr.disabled a { color: var(--darkGrey) !important; }
 #users_table tbody tr td:first-of-type, #users_table tbody tr td:last-of-type { padding: 0; }
 #users_table tbody tr td:last-of-type i { line-height: 34px; }
 #users_table tbody tr td:last-of-type a { color: var(--lightGreen); }
