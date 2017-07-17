@@ -6,8 +6,8 @@
 	******************************************************************/
 
 	if(isset($_POST['ajax']) && isset($_POST['id'])) {
-		require("../config.php");
-		require("../login.php");
+		require("../../config.php");
+		require("../../login.php");
 		// --- Case Edit is Update
 		if(isset($_POST['message'])) {
 			// --- Make sure the message is not uppercase
