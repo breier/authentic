@@ -16,6 +16,7 @@
 			$this->ajax  = "$this->root/libexec";
 			$this->php   = "$this->root/lib/php";
 			$this->lang  = "$this->root/lib/languages";
+			$this->proto = "$this->root/lib/protocols";
 		// -- Set independent browser loaded folders
 			$this->js    = "./lib/js";
 			$this->css   = "./lib/css";

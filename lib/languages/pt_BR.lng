@@ -64,8 +64,11 @@ Registrations =/= Cadastros
 This Month =/= Este Mês
 On Line =/= Conectados
 Off Line =/= Desconectados
+Disabled =/= Desabilitados
 Mbits Sold =/= Mbits Vendidos
 Open Tickets =/= Tickets Abertos
+Solved Tickets =/= Tickets Resolvidos
+Late Tickets =/= Tickets Atrasados
 Main Throughput =/= Tráfego Principal
 No throughput data at monitor table! =/= Sem dados de tráfego na tabela de monitoramento!
 Users per Plan =/= Usuários por Plano
@@ -137,6 +140,18 @@ Delete =/= Remover
 Group =/= Grupo
 Service =/= Serviço
 Port =/= Porta
+Couldn't locate user data! =/= Não pôde encontrar dados do usuário!
+Equipment successfully edited! =/= Equipamento editado com sucesso!
+Customer successfully edited! =/= Cliente editado com sucesso!
+User successfully edited! =/= Usuário editado com sucesso!
+Customer successfully disabled! =/= Cliente desabilitado com sucesso!
+User successfully disabled! =/= Usuário desabilitado com sucesso!
+Customer successfully enabled! =/= Cliente habilitado com sucesso!
+User successfully enabled! =/= Usuário habilitado com sucesso!
+NAS not found! =/= NAS não encontrado!
+NAS protocol not found! =/= Protocolo do NAS não encontrado!
+Customer couldn't be reset! =/= Cliente não pôde ser reiniciado!
+User couldn't be reset! =/= Usuário não pôde ser reiniciado!
 Are you sure you want to delete: =/= Você tem certeza que quer remover:
 You do not have permission to delete! =/= Você não tem permissão para remover!
 Equipment not deleted! =/= Equipamento não removido!
@@ -144,10 +159,6 @@ Equipment successfully deleted! =/= Equipamento removido com sucesso!
 Couldn't locate username! =/= Não pôde encontrar o usuário!
 Customer successfully deleted! =/= Cliente removido com sucesso!
 User successfully deleted! =/= Usuário removido com sucesso!
-Couldn't locate user data! =/= Não pôde encontrar dados do usuário!
-Equipment successfully edited! =/= Equipamento editado com sucesso!
-Customer successfully edited! =/= Cliente editado com sucesso!
-User successfully edited! =/= Usuário editado com sucesso!
 ##Template Form Fields
 City =/= Cidade
 Address, N =/= Endereço, nº

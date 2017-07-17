@@ -39,7 +39,7 @@
 			if($_pgobj->rows != 1) die(json_encode(array("alert-danger", $_msg->lang("Couldn't locate username!"))));
 			$edit_username = $_pgobj->result[0]['username'];
 			if(isset($edit_array['groupname'])) {
-				$_pgobj->query_params('UPDATE radusergroup SET groupname = $1 WHERE username = $2', array($edit_array['groupname'], $edit_username));
+				$_pgobj->query_params('UPDATE radusergroup SET groupname = $1 WHERE username = $2 AND priority = 0', array($edit_array['groupname'], $edit_username));
 				if($_pgobj->rows != 1) die(json_encode(array("alert-danger", $_msg->lang("The setting could not be saved!"))));
 				unset($edit_array['groupname']);
 			} if(isset($edit_array['framedipaddress'])) {
@@ -55,7 +55,7 @@
 				unset($edit_array['password']);
 			} if(isset($edit_array['username'])) {
 				$_pgobj->query_params('UPDATE radusergroup SET username = $1 WHERE username = $2', array($edit_array['username'], $edit_username));
-				if($_pgobj->rows != 1) die(json_encode(array("alert-danger", $_msg->lang("The setting could not be saved!"))));
+				if($_pgobj->rows < 1) die(json_encode(array("alert-danger", $_msg->lang("The setting could not be saved!"))));
 				$_pgobj->query_params('UPDATE radreply SET username = $1 WHERE username = $2', array($edit_array['username'], $edit_username));
 				$_pgobj->query_params('UPDATE radacct SET username = $1 WHERE username = $2', array($edit_array['username'], $edit_username));
 				$_pgobj->query_params('UPDATE radpostauth SET username = $1 WHERE username = $2', array($edit_array['username'], $edit_username));

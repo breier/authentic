@@ -47,7 +47,7 @@
 			if(!filter_var($ip_address, FILTER_VALIDATE_IP) === false) {
 				$td_status = "<a href=\"http://$ip_address/\" title=\"". $_msg->lang("Access Device");
 				$td_status.= "\" target=\"_blank\">". $_msg->lang("connected") ."</a>";
-			} else $td_status = '<i style="color: red;">'. $_msg->lang("disconnected") .'</i>';
+			} else $td_status = '<i class="red">'. $_msg->lang("disconnected") .'</i>';
 			$all_rows[] = array($td_first, $td_second, $td_third, $td_fourth, $td_status);
 		} print(json_encode($all_rows));
 	}

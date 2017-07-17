@@ -263,12 +263,20 @@
 													<i class="fa fa-bars"></i>
 												</button>
 												<ul class="dropdown-menu">
-													<li><a id="details_history" href="javascript:void(0);"><i class="fa fa-book"></i> <?= $_msg->lang("History"); ?></a></li>
-													<li><a id="details_support" href="javascript:void(0);"><i class="fa fa-wrench"></i> <?= $_msg->lang("Support"); ?></a></li>
+													<li><a id="details_history" href="javascript:void(0);">
+														<i class="fa fa-book"></i> <?= $_msg->lang("History"); ?></a>
+													</li>
+													<li><a id="details_support" href="javascript:void(0);">
+														<i class="fa fa-wrench"></i> <?= $_msg->lang("Support"); ?></a>
+													</li>
 <?php		if($_session->groupname != 'tech') { ?>
 													<li role="separator" class="divider"></li>
-													<li><a id="details_disable" data-enable="<?= $_msg->lang('Enable'); ?>" href="javascript:void(0);"><i class="fa fa-lock"></i> <?= $_msg->lang("Disable"); ?></a></li>
-													<li><a id="details_delete" href="javascript:void(0);"><i class="fa fa-trash"></i> <?= $_msg->lang("Delete"); ?></a></li>
+													<li><a id="details_disable" data-enable="<?= $_msg->lang('Enable'); ?>" data-disable="<?= $_msg->lang('Disable'); ?>" href="javascript:void(0);">
+														<i class="fa fa-lock"></i> <span><?= $_msg->lang("Disable"); ?></span></a>
+													</li>
+													<li><a id="details_delete" href="javascript:void(0);">
+														<i class="fa fa-trash"></i> <?= $_msg->lang("Delete"); ?></a>
+													</li>
 <?php		} ?>
 												</ul>
 											</div>
@@ -292,10 +300,7 @@
 										<div class="modal-body">
 											<p><?= $_msg->lang("Are you sure you want to delete:"); ?> <span class="strong">empty</span></p>
 											<br /><p><?= $_msg->lang("This action is irreversible."); ?></p>
-											<form action="<?= $_SERVER['REQUEST_URI']; ?>" method="post" enctype="application/x-www-form-urlencoded">
-												<input type="hidden" name="id" />
-												<input type="hidden" name="delete" value="true" />
-											</form>
+											<input type="hidden" name="delete_id" />
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-default" data-dismiss="modal"><?= $_msg->lang("Cancel"); ?></button>

@@ -35,45 +35,13 @@
 							<div class="clearfix"></div>
 						</div>
 						<div class="x_content">
-<?php	// ----- Dealing with POST forms ----- //
-	if(isset($_POST['id']) && isset($_POST['delete'])) {
-		// Checking Permissions
-		if($_session->groupname == 'tech') $_msg->warning("You do not have permission to delete!");
-		elseif($_session->groupname == 'admn' && ($list_type == 'admn' || $list_type == 'equipment'))
-			$_msg->warning("You do not have permission to delete!");
-		else {
-			// Deleting Equipment
-			if($list_type == 'equipment') {
-				$_pgobj->query_params('DELETE FROM at_equipments WHERE id = $1', array(intval($_POST['id'])));
-				if($_pgobj->rows != 1) $_msg->warning("Equipment not deleted!");
-				else $success_message = $_msg->lang("Equipment successfully deleted!");
-			} else {
-			// Deleting Customer / User
-				$_pgobj->query_params('SELECT username FROM at_userdata WHERE id = $1', array(intval($_POST['id'])));
-				if($_pgobj->rows != 1) $_msg->warning("Couldn't locate username!");
-				else {
-					$delete_user = $_pgobj->result[0]['username'];
-					$delete_count = 0;
-					$_pgobj->query("DELETE FROM radusergroup WHERE username = '$delete_user'");
-					$delete_count += $_pgobj->rows;
-					$_pgobj->query("DELETE FROM radreply WHERE username = '$delete_user'");
-					$_pgobj->query("DELETE FROM radcheck WHERE username = '$delete_user'");
-					$delete_count += $_pgobj->rows;
-					$_pgobj->query("DELETE FROM at_userdata WHERE username = '$delete_user'");
-					$delete_count += $_pgobj->rows;
-					if($delete_count >= 3) {
-						if($list_type == 'inet') $success_message = $_msg->lang("Customer successfully deleted!");
-						else $success_message = $_msg->lang("User successfully deleted!");
-					}
-				}
-			}
-		}
-	}
-?>
 							<input type="hidden" id="type" value="<?= $list_type; ?>" />
 							<h5 class="col-xs-4"><strong><?= $_msg->lang("Total"); ?>: </strong><span id="total_result">00</span></h5>
 							<div class="col-xs-8">
 								<input type="search" id="search" class="form-control pull-right" placeholder="<?= $_msg->lang('Search'); ?>" />
+								<span aria-hidden="true" class="form-control-feedback smart-delete">
+									<img src="<?= $_path->images; ?>/glyphicons-257-delete.png" alt="X" />
+								</span>
 							</div>
 							<table id="users_table" class="table" data-empty="<?= $_msg->lang('No data available in the table!'); ?>">
 								<thead>
@@ -169,10 +137,7 @@
 									<div class="modal-body">
 										<p><?= $_msg->lang("Are you sure you want to delete:"); ?> <span class="strong">empty</span></p>
 										<br /><p><?= $_msg->lang("This action is irreversible."); ?></p>
-										<form action="<?= $_SERVER['REQUEST_URI']; ?>" method="post" enctype="application/x-www-form-urlencoded">
-											<input type="hidden" name="id" />
-											<input type="hidden" name="delete" value="true" />
-										</form>
+										<input type="hidden" name="delete_id" />
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-default" data-dismiss="modal"><?= $_msg->lang("Cancel"); ?></button>
@@ -191,6 +156,9 @@
 									var searchString = (searchArray[1] == undefined) ? ('') : (searchArray[1]);
 									var pageNumber = (searchArray[2] == undefined) ? (1) : (searchArray[2]);
 									var sortOrder = (searchArray[3] == undefined) ? ('1a') : (searchArray[3]);
+									$("#search").val(searchString);
+									if ($("#search").val().length) $("#search + span.smart-delete").show();
+									else $("#search + span.smart-delete").hide();
 								// Do the AJaJSON request
 									list_fillUsersTable($("#type").val(), searchString, pageNumber, sortOrder);
 								});
@@ -203,7 +171,10 @@
 								var pageNumber = (searchArray[2] == undefined) ? (1) : (searchArray[2]);
 								var sortOrder = (searchArray[3] == undefined) ? ('1a') : (searchArray[3]);
 								$("#search").val(searchString);
+								if ($("#search").val().length) $("#search + span.smart-delete").show();
+								else $("#search + span.smart-delete").hide();
 								$("#search").on("input", null, "input", list_searchTable);
+								$("#search + span.smart-delete").on("click", function () { window.location = '#' });
 <?php	if(isset($success_message)) { ?>
 								alertPNotify('alert-success', '<?= $success_message; ?>');
 <?php	} ?>

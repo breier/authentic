@@ -9,6 +9,13 @@ CREATE FUNCTION at_date_update() RETURNS trigger
    RETURN NEW;
 END;$$;
 
+CREATE FUNCTION at_account_groupname() RETURNS trigger
+   LANGUAGE plpgsql
+   AS $$BEGIN
+   NEW.groupname := (SELECT groupname FROM radusergroup WHERE username = NEW.username ORDER BY priority LIMIT 1);
+   RETURN NEW;
+END;$$;
+
 CREATE FUNCTION at_duplicated_accounts_update() RETURNS trigger
    LANGUAGE plpgsql
    AS $$BEGIN
@@ -142,6 +149,13 @@ CREATE TABLE at_userdata_deleted (
    picture text
 );
 
+CREATE VIEW at_userauth AS
+	WITH rap AS (SELECT username, "value" AS password FROM radcheck WHERE attribute = 'Cleartext-Password'),
+	ram AS (SELECT username, "value" AS mac_address FROM radcheck WHERE attribute = 'Calling-Station-Id')
+	SELECT rug.username, array_agg(rug.groupname) AS groupname, array_agg(rug.priority) AS priority, rap.password, ram.mac_address
+	FROM radusergroup rug LEFT JOIN rap ON rug.username = rap.username LEFT OUTER JOIN ram ON rap.username = ram.username
+	GROUP BY rug.username, ram.mac_address, rap.password;
+
 CREATE VIEW at_technicians AS
    SELECT id, "substring"(data, ':"name";s:[0-9]+:"([^"]+)";') AS name
    FROM at_userdata
@@ -159,13 +173,7 @@ CREATE VIEW at_framedipaddress_accounts AS
    FROM at_userauth aua LEFT OUTER JOIN radacct ra ON aua.username = ra.username AND ra.acctstoptime IS NULL
    WHERE NOT aua.groupname && ARRAY['full'] ORDER BY aua.username;
 
-CREATE VIEW at_userauth AS
-	WITH rap AS (SELECT username, "value" AS password FROM radcheck WHERE attribute = 'Cleartext-Password'),
-	ram AS (SELECT username, "value" AS mac_address FROM radcheck WHERE attribute = 'Calling-Station-Id')
-	SELECT rug.username, array_agg(rug.groupname) AS groupname, array_agg(rug.priority) AS priority, rap.password, ram.mac_address
-	FROM radusergroup rug LEFT JOIN rap ON rug.username = rap.username LEFT OUTER JOIN ram ON rap.username = ram.username
-	GROUP BY rug.username, ram.mac_address, rap.password;
-
 CREATE TRIGGER save_customers BEFORE DELETE ON at_userdata FOR EACH ROW EXECUTE PROCEDURE save_deleted();
 CREATE TRIGGER at_date_session_update BEFORE UPDATE ON at_session FOR EACH ROW EXECUTE PROCEDURE at_date_update();
+CREATE TRIGGER at_account_groupname_add BEFORE INSERT ON radacct FOR EACH ROW EXECUTE PROCEDURE at_account_groupname();
 CREATE TRIGGER at_duplicated_active_accounts_update AFTER INSERT ON radacct FOR EACH STATEMENT EXECUTE PROCEDURE at_duplicated_accounts_update();

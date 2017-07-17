@@ -9,6 +9,7 @@
 	if(isset($_POST['ajax']) && isset($_POST['type'])) {
 // ---- Loop Fill Table Rows ----- //
 //$_msg->wrn($query);
+		if(!$_pgobj->rows) $_msg->error("Couldn't locate user data!");
 		$details_result = $_pgobj->result;
 		// --- Filling plans array
 		$plans_array = array();

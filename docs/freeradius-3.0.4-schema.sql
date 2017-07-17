@@ -1,15 +1,11 @@
 /*
  * $Id: 00b5e3b52b55f024e5ed91d7aaf26d78c309c741 $
- *
  * Postgresql schema for FreeRADIUS
- *
  * All field lengths need checking as some are still suboptimal. -pnixon 2003-07-13
- *
  */
 
 /*
  * Table structure for table 'radacct'
- *
  * Note: Column type bigserial does not exist prior to Postgres 7.2
  *       If you run an older version you need to change this to serial
  */
@@ -79,8 +75,6 @@ CREATE INDEX radacct_start_user_idx ON radacct (AcctStartTime, UserName);
  * create index radacct_AcctStartTime on radacct (AcctStartTime);
  * create index radacct_AcctStopTime on radacct (AcctStopTime);
 */
-
-
 
 /*
  * Table structure for table 'radcheck'

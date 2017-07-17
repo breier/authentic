@@ -19,20 +19,23 @@
 		// Get temporary plans array ordered by price
 		$_pgobj->query("SELECT name FROM at_plans ORDER BY media, price");
 		for($i=0; $i<$_pgobj->rows; $i++) $temp_plans[$_pgobj->result[$i]['name']] = array();
-		$query = "SELECT COUNT(groupname) AS customers_per_plan, groupname FROM radusergroup";
-		$query.= " WHERE groupname NOT IN ('full', 'admn', 'tech') GROUP BY groupname";
-		if($_pgobj->query($query)) {
-			for($i=0; $i<$_pgobj->rows; $i++) {
-				$temp = $_pgobj->fetch_array($i);
-				$temp_plans[$temp['groupname']]['customers_per_plan'] = $temp['customers_per_plan'];
-				$temp_plans[$temp['groupname']]['plan_custom_color'] = get_color($temp['groupname'], 0.8);
-			}
+		$query = "SELECT COUNT(groupname) AS customers_per_plan, array_to_json(groupname) AS groupname, array_to_json(priority) AS priority";
+		$query.= " FROM at_userauth WHERE NOT groupname && ARRAY['full', 'admn', 'tech', 'disabled'] GROUP BY groupname, priority";
+		$_pgobj->query($query);
+		for($i=0; $i<$_pgobj->rows; $i++) {
+			$groupname_array = json_decode($_pgobj->result[$i]['groupname']);
+			$priority_zero_index = array_search(0, json_decode($_pgobj->result[$i]['priority']));
+			if(!$priority_zero_index) $priority_zero_index = 0;
+			$temp_plans[$groupname_array[$priority_zero_index]]['customers_per_plan'] = $_pgobj->result[$i]['customers_per_plan'];
+			$temp_plans[$groupname_array[$priority_zero_index]]['plan_custom_color'] = get_color($groupname_array[$priority_zero_index], 0.8);
 		}
 		// Put each data on its array
 		foreach($temp_plans as $key => $value) {
+			if(!isset($value['customers_per_plan'])) continue;
+			if(!$value['customers_per_plan']) continue;
 			$plans[] = $key;
-			$customers_per_plan[] = (isset($value['customers_per_plan'])) ? ($value['customers_per_plan']) : (0);
-			$plan_custom_color[] = (isset($value['plan_custom_color'])) ? ($value['plan_custom_color']) : (0);
+			$customers_per_plan[] = $value['customers_per_plan'];
+			$plan_custom_color[] = $value['plan_custom_color'];
 		}
 		// Prepare for chart
 		if(count($plans)>1) {
