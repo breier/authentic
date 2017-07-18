@@ -5,12 +5,11 @@
 	* this function is not random! same input means same color.      *
 	******************************************************************/
 
-	function get_color ($string, $alpha = 1) {
+	function get_color ($string, $alpha = 1, $md5_search_char = 'b') {
 	// Checking input
 		if(is_array($string)) return FALSE;
 		if(!is_numeric($alpha)) return FALSE;
 	// Defining Variables
-		$md5_search_char = 'b';
 		$md5 = md5(strval($string));
 		$colors = array();
 	// Getting a good position

@@ -49,8 +49,8 @@
 			$moment_str = "[ '".implode("', '", $moment)."' ]";
 			for($i=0; $i<count($mbps_download); $i++) {
 				if($i) $datasets.= ",";
-				$datasets.= "{ label: '". $interface_name[$i] ."', data: [ ". implode(", ", $mbps_download[$i]);
-				$datasets.= " ], borderColor: '". get_color($interface_name[$i], 0.6) ."', backgroundColor: '". get_color($interface_name[$i], 0.1) ."' }";
+				$datasets.= "{ label: '". $interface_name[$i] ."', data: [ ". implode(", ", $mbps_download[$i]) ." ],";
+				$datasets.= " borderColor: '". get_color($interface_name[$i], 0.6, "2") ."', backgroundColor: '". get_color($interface_name[$i], 0.1, "2") ."' }";
 			} $datasets.= "]";
 ?>
 							<div class="x_panel" style="min-height: 200px;">
