@@ -51,7 +51,7 @@ CREATE TABLE at_equipments (
    category text NOT NULL,
    groupname text NOT NULL,
    ip_address inet NOT NULL,
-   mac_address macaddr NOT NULL,
+   mac_address macaddr[] NOT NULL,
    location text,
    comments text
 );

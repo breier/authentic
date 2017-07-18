@@ -89,7 +89,8 @@
 															min: '<?= $moment[0]; ?>',
 															max: '<?= $moment[(count($moment)-1)]; ?>'
 														}
-													}]
+													}],
+													yAxes: [{ stacked: true }]
 												},
 												tooltips: {
 													callbacks: {
