@@ -49,7 +49,7 @@
 										<h2><?= $_msg->lang("Users per Plan"); ?></h2>
 										<div class="clearfix"></div>
 									</div>
-									<div class="x_content"><canvas id="chart_users_per_plan" height="160"></canvas></div>
+									<div class="x_content"><canvas id="chart_users_per_plan" height="<?= count($plans)*22; ?>"></canvas></div>
 									<script>
 										$(function () {
 											var ctxUsersPerPlan = document.getElementById("chart_users_per_plan").getContext("2d");

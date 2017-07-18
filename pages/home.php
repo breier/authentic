@@ -54,7 +54,24 @@
 								<strong class="red">00</strong> <span class="red"><?= $_msg->lang("Late Tickets"); ?></span>
 							</span>
 						</div>
-						<script type="text/javascript">home_fillTilesInfo();</script>
+						<script type="text/javascript">
+						/* ----- Define AJaX request for Tiles Info at Home Page ----- */
+							function home_fillTilesInfo () {
+								$.ajax({
+									url: '<?= $_path->ajax; ?>/charts/tiles_info.php',
+									type: 'POST',
+									data: 'ajax=1',
+									success: function (response) {
+										if (response[0]!='[') alertPNotify ('alert-danger', response, 5000);
+										else {
+											var tilesInfo = JSON.parse(response);
+											$(".row.tile_count div.count").each(function (index, element) { $(element).html(tilesInfo[index*2]) });
+											$(".row.tile_count strong").each(function (index, element) { $(element).html(tilesInfo[(index*2)+1]) });
+										} setTimeout('home_fillTilesInfo()', 30*1000);
+									}
+								});
+							}; home_fillTilesInfo();
+						</script>
 					</div>
 				</div>
 				<!-- Close and re-open parent outside <div class="row"> to fix double layout after tiles /-->
@@ -62,12 +79,18 @@
 				<div class="row">
 					<div id="main_chart" class="col-xl-9 col-md-12"><i class="fa fa-refresh fa-spin fa-fw"></i></div>
 					<script type="text/javascript">
-						$.ajax({
-							url: '<?= $_path->ajax; ?>/charts/<?= $_settings->system["Main Chart"]; ?>.php',
-							type: 'POST',
-							data: 'ajax=1',
-							success: function (response) { $("#main_chart").html(response); }
-						});
+					/* ----- Define AJaX request for Main Chart at Home Page ----- */
+						function home_fillMainChart () {
+							$.ajax({
+								url: '<?= $_path->ajax; ?>/charts/<?= $_settings->system["Main Chart"]; ?>.php',
+								type: 'POST',
+								data: 'ajax=1',
+								success: function (response) {
+									$("#main_chart").html(response);
+								//	setTimeout('home_fillMainChart()', 30*1000); // only when it updates data only
+								}
+							});
+						}; home_fillMainChart();
 					</script>
 					<div id="users_per_plan_chart" class="col-xl-3 col-md-5 col-sm-5 col-ms-8 col-xs-12"><i class="fa fa-refresh fa-spin fa-fw"></i></div>
 					<script type="text/javascript">

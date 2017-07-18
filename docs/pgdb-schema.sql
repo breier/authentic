@@ -162,6 +162,12 @@ CREATE VIEW at_technicians AS
    WHERE (username IN (SELECT username FROM at_userauth WHERE groupname && ARRAY['admn', 'tech'] AND NOT groupname && ARRAY['disabled']))
    UNION SELECT 0 AS id, 'unknown' AS name;
 
+CREATE VIEW at_groupname_changes AS
+	SELECT username, groupname, max(acctstarttime) AS date
+	FROM radacct
+	GROUP BY username, groupname
+	ORDER BY username
+
 CREATE VIEW at_duplicated_active_accounts AS
    SELECT accounting.username, accounting.dup
    FROM (SELECT radacct.username, count(radacct.username) AS dup FROM radacct

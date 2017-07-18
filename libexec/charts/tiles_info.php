@@ -25,13 +25,13 @@
 		$_pgobj->query("SELECT username FROM at_userauth WHERE NOT groupname && ARRAY['full', 'admn', 'tech'] AND groupname && ARRAY['disabled']");
 		$disabled_customers = $_pgobj->rows;
 		$disabled_month = 0;
-	//	$disabled_customers_array = $_pgobj->result;
-	//	for($i=0; $i<count($disabled_customers_array); $i++) {
-	//		$query = "SELECT username FROM radacct WHERE username = '". $disabled_customers_array[$i]['username'];
-	//		$query.= "' AND acctstoptime > DATE_TRUNC('month', now()) AND groupname <> 'disabled'";
-	//		$_pgobj->query($query);
-	//		if($_pgobj->rows) $disabled_month++;
-	//	}
+		$disabled_customers_array = $_pgobj->result;
+		for($i=0; $i<count($disabled_customers_array); $i++) {
+			$query = "SELECT username FROM at_groupname_changes WHERE username = '". $disabled_customers_array[$i]['username'];
+			$query.= "' AND date > DATE_TRUNC('month', now()) AND groupname <> 'disabled'";
+			$_pgobj->query($query);
+			if($_pgobj->rows) $disabled_month++;
+		}
 		// Mbits Sold
 		$plans = array();
 		$customers_per_plan = array();
