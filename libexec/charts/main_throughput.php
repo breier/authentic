@@ -14,8 +14,8 @@
 		$equipment_id = 1;
 		$data_points = intval($_settings->system['Data Points']) + 1;
 		$moment = array();
-		$mbps_upload = array();
 		$mbps_download = array();
+		$interface_name = array();
 		if($_pgobj->query("SELECT equipment_name, date, data FROM at_monitor WHERE equipment_id = $equipment_id ORDER BY date DESC LIMIT $data_points")) {
 			for($i=($_pgobj->rows - 1); $i>=0; $i--) {
 				$temp = $_pgobj->fetch_array($i);
@@ -23,31 +23,35 @@
 				$data = unserialize($temp['data']);
 				if(!isset($previous_moment)) {
 					if(!isset($data['throughput'])) break;
-					if(!isset($data['throughput'][0][0])) break;
+					if(!isset($data['throughput'][0][0][0])) break;
 					$previous_moment = strtotime($temp['date']);
-					$previous_download = $data['throughput'][0][0];
-					$previous_upload = $data['throughput'][0][1];
-					continue;
+					for($j=0; $j<count($data['throughput'][0]); $j++) {
+						$interface_name[$j] = $data['throughput'][0][$j][2];
+						$previous_download[$j] = $data['throughput'][0][$j][0];
+					} continue;
 				} $actual_moment = strtotime($temp['date']);
-				$actual_download = $data['throughput'][0][0];
-				$actual_upload = $data['throughput'][0][1];
+				for($j=0; $j<count($data['throughput'][0]); $j++) $actual_download[$j] = $data['throughput'][0][$j][0];
 				if(!isset($diff_moment)) $diff_moment = ($actual_moment-$previous_moment);
 				$moment[] = date("Y-m-d H:i", ($actual_moment-($diff_moment/2)));
 			// --- Make it smart for many charts
 			// $kpps_download[] = round(($actual_download-$previous_download)/1000/($actual_moment-$previous_moment), 2); // kpps
 			// $kpps_upload[] = round(($actual_upload-$previous_upload)/1000/($actual_moment-$previous_moment), 2); // kpps
-				$mbps_download[] = round((($actual_download-$previous_download)/(1024*1024)/($actual_moment-$previous_moment))*8); // Mbps
-				$mbps_upload[] = round((($actual_upload-$previous_upload)/(1024*1024)/($actual_moment-$previous_moment))*8); // Mbps
-				$previous_moment = $actual_moment;
-				$previous_download = $actual_download;
-				$previous_upload = $actual_upload;
+				for($j=0; $j<count($data['throughput'][0]); $j++) {
+					$mbps_download[$j][] = round((($actual_download[$j]-$previous_download[$j])/(1024*1024)/($actual_moment-$previous_moment))*8); // Mbps
+				} $previous_moment = $actual_moment;
+				for($j=0; $j<count($data['throughput'][0]); $j++) $previous_download[$j] = $actual_download[$j];
 			}
 		}
 
 		if(count($moment)>1) {
+			include("$_path->php/get_color.php"); // Function get_color($string, $alpha = 1);
+			$datasets = "[";
 			$moment_str = "[ '".implode("', '", $moment)."' ]";
-			$mbps_download_str = "[ ".implode(", ", $mbps_download)." ]";
-			$mbps_upload_str = "[ ".implode(", ", $mbps_upload)." ]";
+			for($i=0; $i<count($mbps_download); $i++) {
+				if($i) $datasets.= ",";
+				$datasets.= "{ label: '". $interface_name[$i] ."', data: [ ". implode(", ", $mbps_download[$i]);
+				$datasets.= " ], borderColor: '". get_color($interface_name[$i], 0.6) ."', backgroundColor: '". get_color($interface_name[$i], 0.1) ."' }";
+			} $datasets.= "]";
 ?>
 							<div class="x_panel" style="min-height: 200px;">
 								<div class="x_title">
@@ -61,17 +65,7 @@
 											type: 'line',
 											data: {
 												labels: <?= $moment_str; ?>,
-												datasets: [{
-													label: '<?= $_msg->lang("Upload"); ?>',
-													data: <?= $mbps_upload_str; ?>,
-													borderColor: 'rgba(224,32,0,0.6)',
-													backgroundColor: 'rgba(224,32,0,0.1)'
-												},{
-													label: '<?= $_msg->lang("Download"); ?>',
-													data: <?= $mbps_download_str; ?>,
-													borderColor: 'rgba(0,128,224,0.6)',
-													backgroundColor: 'rgba(0,128,224,0.1)'
-												}]
+												datasets: <?= $datasets; ?>
 											},
 											options: {
 												responsive: true,

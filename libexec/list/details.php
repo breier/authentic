@@ -36,7 +36,10 @@
 				$priority_zero_index = array_search(0, json_decode($details_array['priority']));
 				if(!$priority_zero_index) $priority_zero_index = 0;
 				$details_array['groupname'] = $groupname_array[$priority_zero_index];
-			} elseif($details_array['equipment_name'] == NULL) $details_array['equipment_name'] = $_msg->lang("unknown");
+			} else {
+				if($details_array['equipment_name'] == NULL) $details_array['equipment_name'] = $_msg->lang("unknown");
+				$details_array['mac_address'] = json_decode(strtoupper($details_array['mac_address']));
+			}
 // ----- Prepare to fill the modal ----- //
 			if($list_type == 'equipment') {
 				$fancy_array = array("equipment_name"	=> array($_msg->lang("Name"), $details_array['equipment_name'], FALSE),
@@ -44,7 +47,7 @@
 											"date"				=> array($_msg->lang("Register Date"), date("d/m/Y", strtotime($details_array['date'])), FALSE),
 											"comments"			=> array($_msg->lang("Details"), $details_array['comments'], FALSE),
 											"groupname"			=> array($_msg->lang("Group"), $details_array['groupname'], FALSE),
-											"mac_address"		=> array($_msg->lang("MAC"), strtoupper($details_array['mac_address']), FALSE),
+											"mac_address"		=> array($_msg->lang("MAC"), $details_array['mac_address'][0], FALSE),
 											"ip_address"		=> array($_msg->lang("IP Address"), $details_array['ip_address'], FALSE),
 											"location"			=> array($_msg->lang("Location"), $details_array['location'], FALSE),
 											"service_type"		=> array($_msg->lang("Service"), $details_array['service_type'], FALSE),
@@ -100,7 +103,7 @@
 <?php				} ?>
 						</select>
 						<span class="ellipsis fadeIn animated"><?= (strlen($details[1])) ? ($details[1]) : ('--'); ?></span>
-<?php			} elseif($field == 'groupname') { ?>
+<?php			} elseif($field == 'groupname' && $list_type != 'equipment') { ?>
 						<select name="groupname" class="form-control selectpicker form-edit">
 <?php				foreach($plans_array as $plan_name => $plan_title) {
 						$is_selected = ($plan_name == $details[1]) ? ('selected="true"') : (''); ?>

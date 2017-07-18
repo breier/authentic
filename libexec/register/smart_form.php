@@ -49,7 +49,7 @@
 												<?= $_msg->lang("Plan"); ?>
 											</label>
 											<div class="col-md-6 col-sm-6 col-ms-6 col-xs-12">
-												<select name="plan" id="plan" class="form-control selectpicker" onchange="$('#chk_plan').val(this.value);">
+												<select name="plan" id="plan" class="form-control selectpicker" onchange="$('#check_plan').val(this.value);">
 <?php	$_pgobj->query("SELECT name, price FROM at_plans ORDER BY media, price");
 		for($i=0; $i<$_pgobj->rows; $i++) {
 			$plan_string = $_pgobj->result[$i]['name'] ." - ". $_settings->system['Currency'] ." ". $_pgobj->result[$i]['price']; ?>

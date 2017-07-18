@@ -16,8 +16,11 @@ DROP TABLE IF EXISTS at_settings CASCADE;
 DROP TABLE IF EXISTS at_tickets CASCADE;
 DROP TABLE IF EXISTS at_ticket_messages CASCADE;
 DROP TABLE IF EXISTS at_ticket_sitrep CASCADE;
+DROP TABLE IF EXISTS at_plans CASCADE;
+DROP TABLE IF EXISTS at_onts CASCADE;
 DROP TABLE IF EXISTS at_userdata CASCADE;
 
 -- DROP authentic-functions if exists
 DROP FUNCTION IF EXISTS at_date_update() CASCADE;
+DROP FUNCTION IF EXISTS at_account_groupname() CASCADE;
 DROP FUNCTION IF EXISTS at_duplicated_accounts_update() CASCADE;

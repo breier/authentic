@@ -72,7 +72,7 @@ CREATE TABLE at_session (
    status boolean NOT NULL,
    ip_address inet,
    mac_address macaddr,
-   connection integer[]
+   connection text
 );
 
 CREATE TABLE at_settings (

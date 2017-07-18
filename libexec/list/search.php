@@ -30,8 +30,10 @@
 		// ----- Query Equipments ----- //
 		if($list_type == 'equipment') {
 			$query = "WITH amt AS (SELECT DISTINCT ON (equipment_id) equipment_id, equipment_name, date FROM at_monitor ORDER BY equipment_id, date DESC)";
-			if($user_id) $query.= " SELECT amt.equipment_name, aeq.*";
-			else $query.= " SELECT aeq.id, amt.date, amt.equipment_name, aeq.location, aeq.brand_name, aeq.ip_address";
+			if($user_id) {
+				$query.= " SELECT amt.equipment_name, aeq.id, aeq.date, aeq.brand_name, aeq.service_type, aeq.service_port, aeq.username, aeq.password";
+				$query.= ", aeq.category, aeq.groupname, aeq.ip_address, array_to_json(aeq.mac_address) AS mac_address, aeq.location, aeq.comments";
+			} else $query.= " SELECT aeq.id, amt.date, amt.equipment_name, aeq.location, aeq.brand_name, aeq.ip_address";
 			$query.= " FROM at_equipments aeq LEFT OUTER JOIN amt ON amt.equipment_id = aeq.id";
 			if($user_id) $query.= " WHERE aeq.id = $user_id";
 			$query.= " ORDER BY $order_by $sort_type";

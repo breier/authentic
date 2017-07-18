@@ -25,8 +25,9 @@
 		if($list_type == 'equipment') {
 			$counter = 0;
 			$query = 'UPDATE at_equipments SET';
-			foreach($edit_array as $key => $value) {
+			foreach($edit_array as $key => &$value) {
 				if($counter) $query.= ",";
+				if($key == 'mac_address') $value = '{'. $value .'}';
 				$query.= " $key = \$". ++$counter;
 			} $query.= ' WHERE id = $'. ++$counter;
 			$edit_array[] = $edit_id;
