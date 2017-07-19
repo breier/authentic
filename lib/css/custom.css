@@ -518,21 +518,21 @@ input + span.form-control-feedback.smart-delete {
 	right: 16px;
 	top: -4px;
 }
-#users_table {
+.table {
 	border: 1px solid var(--lightGrey);
 	margin-bottom: 10px;
 }
-#users_table thead {
+.table thead {
 	border: solid 1px var(--darkBlue);
 	background-color: var(--mainBackground);
 	cursor: pointer;
 	color: var(--lightGrey);
 }
-#users_table thead th i:not(.active) { opacity: 0.5; }
-#users_table thead th:hover { color: var(--white); }
-#users_table thead th:hover i { opacity: 1; }
-#users_table tbody tr { color: var(--darkBlue); }
-#users_table tbody tr:hover td {
+.table thead th i:not(.active) { opacity: 0.5; }
+.table thead th:hover { color: var(--white); }
+.table thead th:hover i { opacity: 1; }
+.table tbody tr { color: var(--darkBlue); }
+.table tbody tr:hover td {
 	background: rgba(38, 185, 154, 0.07);
 	border-top: 1px solid rgba(38, 185, 154, 0.2);
 	border-bottom: 1px solid rgba(38, 185, 154, 0.2);
@@ -729,6 +729,26 @@ input + span.form-control-feedback.smart-delete {
 #name_select + div button { margin: 0 5px 10px; }
 @media (max-width: 480px) {
 	#name_select>div>label { display: none; }
+}
+/*** Everything fot Manage Plans Page ***/
+#plans_table tbody tr td:first-of-type { padding: 0; }
+#plans_table tbody td a {
+	position: relative;
+	display: block;
+	max-width: 200px;
+	padding: 8px;
+}
+@media (max-width: 710px) {
+	#plans_table tbody td:nth-child(6), #plans_table thead th:nth-child(6) { display: none; }
+}
+@media (max-width: 580px) {
+	#plans_table tbody td:nth-child(3), #plans_table thead th:nth-child(3) { display: none; }
+}
+@media (max-width: 460px) {
+	#plans_table tbody td:nth-child(5), #plans_table thead th:nth-child(5) { display: none; }
+}
+@media (max-width: 360px) {
+	#plans_table tbody td:nth-child(4), #plans_table thead th:nth-child(4) { display: none; }
 }
 /*** Helpdesk Tickets List as simple calendar ***/
 .tickets-header, .tickets-list { text-align: left; }

@@ -47,12 +47,18 @@
 		if($action == 'disable') {
 			if(array_search('disabled', $groupname_array) !== FALSE) die(json_encode(array("alert-danger", $_msg->lang("Unauthorized Query!"))));
 			$_pgobj->query("INSERT INTO radusergroup (username, groupname, priority) VALUES ('$username', 'disabled', -2)");
-			if($_pgobj->rows == 1) die(json_encode(array("alert-success", $_msg->lang("$user_customer successfully disabled!"))));
+			if($_pgobj->rows == 1) {
+				$_pgobj->query("UPDATE radreply SET op = '!=' WHERE username = '$username'");
+				die(json_encode(array("alert-success", $_msg->lang("$user_customer successfully disabled!"))));
+			}
 	// --- Enabling User / Customer
 		} elseif($action == 'enable') {
 			if(array_search('disabled', $groupname_array) === FALSE) die(json_encode(array("alert-danger", $_msg->lang("Unauthorized Query!"))));
 			$_pgobj->query("DELETE FROM radusergroup WHERE username = '$username' AND groupname = 'disabled'");
-			if($_pgobj->rows == 1) die(json_encode(array("alert-success", $_msg->lang("$user_customer successfully enabled!"))));
+			if($_pgobj->rows == 1) {
+				$_pgobj->query("UPDATE radreply SET op = ':=' WHERE username = '$username'");
+				die(json_encode(array("alert-success", $_msg->lang("$user_customer successfully enabled!"))));
+			}
 	// --- Deleting User / Customer / Equipment
 		} elseif($action == 'delete') {
 			// Deleting Equipment

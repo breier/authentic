@@ -22,6 +22,18 @@
 							<div class="clearfix"></div>
 						</div>
 						<div class="x_content">
+							<table id="plans_table" class="table">
+								<thead>
+									<tr>
+										<th><?= $_msg->lang("Plan"); ?></th>
+										<th><?= $_msg->lang("Price"); ?></th>
+										<th><?= $_msg->lang("Media"); ?></th>
+										<th><?= $_msg->lang("Download"); ?></th>
+										<th><?= $_msg->lang("Upload"); ?></th>
+										<th><?= $_msg->lang("Assured"); ?></th>
+									</tr>
+								</thead>
+								<tbody>
 <?php // ----- Checking Permissions ----- //
 	if($_session->groupname == 'tech') $_msg->warning("You do not have permission to see this page!");
 	else {
@@ -106,58 +118,18 @@
 			$assured_download = (intval(substr($_pgobj->result[$i]['rate'], strrpos($_pgobj->result[$i]['rate'], '/') + 1)) / (1024*1024));
 			$plan_array['assured'] = round(($assured_download * 100) / $plan_array['download']);
 			// ----- Printing Plan Information Block ----- // ?>
-							<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-ms-9 col-xs-12">
-								<form class="settings-block" action="<?= $_SERVER['REQUEST_URI']; ?>" method="post" data-plan="<?= $plan_array['id']; ?>" data-label="<?= $plan_array['plan']; ?>" enctype="application/x-www-form-urlencoded">
-									<div class="header col-md-12 text-right">
-										<input type="hidden" name="id" value="<?= $plan_array['id']; ?>" />
-										<a href="javascript:void(0);" onclick="settings_saveFormField('<?= $plan_array['plan']; ?>');"><span class="strong"><?= $_msg->lang("Save"); ?></span><i class="fa fa-save"></i></a>
-										<a href="javascript:void(0);" onclick="tools_deletePlan('<?= $plan_array['id']; ?>');"><span class="strong red"><?= $_msg->lang("Delete"); ?></span><i class="fa fa-trash red"></i></a>
-									</div>
-									<div class="clearfix"></div>
-									<label class="control-label col-md-4 col-sm-4 col-xs-4" for="plan_<?= $plan_array['plan']; ?>"><?= $_msg->lang("Plan"); ?></label>
-									<div class="col-md-8 col-sm-8 col-xs-8">
-										<input type="text" name="plan" id="plan_<?= $plan_array['plan']; ?>" value="<?= $plan_array['plan']; ?>" required="" class="form-control"/>
-									</div>
-									<label class="control-label col-md-4 col-sm-4 col-xs-4" for="price_<?= $plan_array['plan']; ?>"><?= $_msg->lang("Price"); ?></label>
-									<div class="col-md-8 col-sm-8 col-xs-8">
-										<div class="input-group">
-											<input type="number" name="price" id="price_<?= $plan_array['plan']; ?>" value="<?= $plan_array['price']; ?>" required="" class="form-control"/>
-											<span class="input-group-addon"><?= $_settings->system['Currency']; ?></span>
-										</div>
-									</div>
-									<label class="control-label col-md-4 col-sm-4 col-xs-4" for="media_<?= $plan_array['plan']; ?>"><?= $_msg->lang("Media"); ?></label>
-									<input type="hidden" name="type" id="type_<?= $plan_array['plan']; ?>" value="Mikrotik-Rate-Limit" />
-									<!-- <input type="hidden" name="type" id="type_<?= $plan_array['plan']; ?>" value="Ascend-Data-Rate" /> -->
-									<div class="col-md-8 col-sm-8 col-xs-8" style="margin-bottom: 8px;">
-										<select name="media" id="media_<?= $plan_array['plan']; ?>" class="form-control selectpicker">
-											<option value="Fiber" <?= ($plan_array['media'] == 'Fiber') ? ('selected="true"') : (''); ?> ><?= $_msg->lang("Fiber"); ?></option>
-											<option value="Radio" <?= ($plan_array['media'] == 'Radio') ? ('selected="true"') : (''); ?> ><?= $_msg->lang("Radio"); ?></option>
-										</select>
-									</div>
-									<label class="control-label col-md-4 col-sm-4 col-xs-4" for="download_<?= $plan_array['plan']; ?>"><?= $_msg->lang("Download"); ?></label>
-									<div class="col-md-8 col-sm-8 col-xs-8">
-										<div class="input-group">
-											<input type="number" name="download" id="download_<?= $plan_array['plan']; ?>" value="<?= $plan_array['download']; ?>" required="" class="form-control"/>
-											<span class="input-group-addon">Mbps</span>
-										</div>
-									</div>
-									<label class="control-label col-md-4 col-sm-4 col-xs-4" for="upload_<?= $plan_array['plan']; ?>"><?= $_msg->lang("Upload"); ?></label>
-									<div class="col-md-8 col-sm-8 col-xs-8">
-										<div class="input-group">
-											<input type="number" name="upload" id="upload_<?= $plan_array['plan']; ?>" value="<?= $plan_array['upload']; ?>" required="" class="form-control"/>
-											<span class="input-group-addon">Mbps</span>
-										</div>
-									</div>
-									<label class="control-label col-md-4 col-sm-4 col-xs-4" for="assured_<?= $plan_array['plan']; ?>"><?= $_msg->lang("Assured"); ?></label>
-									<div class="col-md-8 col-sm-8 col-xs-8">
-										<div class="input-group">
-											<input type="number" name="assured" id="assured_<?= $plan_array['plan']; ?>" value="<?= $plan_array['assured']; ?>" required="" class="form-control"/>
-											<span class="input-group-addon"> % </span>
-										</div>
-									</div>
-									<div class="clearfix"></div>
-								</form>
-							</div>
+									<tr>
+										<td>
+											<a class="ellipsis" href="javascript:void(0);" onclick="tools_editPlan(<?= $plan_array['id']; ?>);" title="<?= $_msg->lang('Edit Plan'); ?>">
+												<span><?= $plan_array['plan']; ?></span>
+											</a>
+										</td>
+										<td><?= $_settings->system['Currency']; ?> <span><?= $plan_array['price']; ?></span></td>
+										<td><?= $plan_array['media']; ?></td>
+										<td><span><?= $plan_array['download']; ?></span> Mbps</td>
+										<td><span><?= $plan_array['upload']; ?></span> Mbps</td>
+										<td><span><?= $plan_array['assured']; ?></span> %</td>
+									</tr>
 <?php	} if(!$i) $_msg->info("No items so far! Use the Add button.");
 		// ----- Getting Customers Per Plan to protect from Deletion ----- //
 		$_pgobj->query("SELECT id, name FROM at_plans");
@@ -169,6 +141,8 @@
 		for($i=0; $i<$_pgobj->rows; $i++) $plans_array[$_pgobj->result[$i]['groupname']]['count'] = $_pgobj->result[$i]['customers_per_plan'];
 		// ----- Printing OnLoad Javascript and Modals ----- //
 ?>
+								</tbody>
+							</table>
 							<input type="hidden" id="customers_per_plan" value='<?= json_encode($plans_array); ?>' />
 							<script src="<?= $_path->js; ?>/bootstrap-select.min.js"></script>
 							<script type="text/javascript">$(function () { $(".selectpicker").selectpicker(); });</script>

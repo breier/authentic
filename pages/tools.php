@@ -22,7 +22,7 @@
 							<div class="x_content">
 								<div class="col-lg-4 col-md-6 col-sm-6 col-ms-9 col-xs-12 text-center">
 									<button type="button" class="btn btn-default" onclick="tools_ontAutofind();"><?= $_msg->lang("ONT Autofind"); ?></button>
-									<table id="onts" class="table">
+									<table id="onts" class="table" style="margin-top: 6px;">
 										<thead>
 											<tr>
 												<th style="text-align: center;"><?= $_msg->lang("ONT"); ?></th>

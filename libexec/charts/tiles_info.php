@@ -25,12 +25,13 @@
 		$_pgobj->query("SELECT username FROM at_userauth WHERE NOT groupname && ARRAY['full', 'admn', 'tech'] AND groupname && ARRAY['disabled']");
 		$disabled_customers = $_pgobj->rows;
 		$disabled_month = 0;
-		$disabled_customers_array = $_pgobj->result;
-		for($i=0; $i<count($disabled_customers_array); $i++) {
-			$query = "SELECT username FROM at_groupname_changes WHERE username = '". $disabled_customers_array[$i]['username'];
-			$query.= "' AND date > DATE_TRUNC('month', now()) AND groupname <> 'disabled'";
+		$disabled_customers_array = array();
+		if($_pgobj->rows) {
+			for($i=0; $i<$_pgobj->rows; $i++) $disabled_customers_array[] = $_pgobj->result[$i]['username'];
+			$query = "SELECT COUNT(username) AS disabled_month FROM at_groupname_changes WHERE username IN ('";
+			$query.= implode("','", $disabled_customers_array) ."') AND date > DATE_TRUNC('month', now()) AND groupname <> 'disabled'";
 			$_pgobj->query($query);
-			if($_pgobj->rows) $disabled_month++;
+			if($_pgobj->rows) $disabled_month = $_pgobj->result[0]['disabled_month'];
 		}
 		// Mbits Sold
 		$plans = array();
