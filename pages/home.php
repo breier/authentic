@@ -16,42 +16,42 @@
 					<div class="row tile_count">
 						<div class="col-lg-2 col-md-4 col-sm-4 col-ms-4 col-xs-6 tile_stats_count ellipsis">
 							<span class="count_top"><i class="fa fa-users"></i> <?= $_msg->lang("Registrations"); ?></span>
-							<div class="count">00</div>
+							<div class="count"><a href="./?p=10">0</a></div>
 							<span class="count_bottom">
 								<a href="./?p=10#<?= date('m/Y'); ?>#1#2d">
-									<strong class="green">00</strong> <span class="green"><?= $_msg->lang("This Month"); ?></span>
+									<strong class="green">0</strong> <span class="green"><?= $_msg->lang("This Month"); ?></span>
 								</a>
 							</span>
 						</div>
 						<div class="col-lg-2 col-md-4 col-sm-4 col-ms-4 col-xs-6 tile_stats_count ellipsis">
 							<span class="count_top"><i class="fa fa-check-circle-o"></i> <?= $_msg->lang("On Line"); ?></span>
-							<div class="count green">00</div>
+							<div class="count green">0</div>
 							<span class="count_bottom red">
 								<a href="./?p=10#<?= $_msg->lang('disconnected'); ?>">
-									<strong class="red">00</strong> <span class="red"><?= $_msg->lang("Off Line"); ?></span>
+									<strong class="red">0</strong> <span class="red"><?= $_msg->lang("Off Line"); ?></span>
 								</a>
 							</span>
 						</div>
 						<div class="col-lg-2 col-md-4 col-sm-4 col-ms-4 col-xs-6 tile_stats_count ellipsis">
 							<span class="count_top"><i class="fa fa-times-circle-o"></i> <?= $_msg->lang("Disabled"); ?></span>
-							<div class="count">00</div>
-							<span class="count_bottom"><strong>00</strong> <?= $_msg->lang("This Month"); ?></span>
+							<div class="count"><a href="./?p=10#<?= strtolower($_msg->lang('Disabled')); ?>">0</a></div>
+							<span class="count_bottom"><strong>0</strong> <?= $_msg->lang("This Month"); ?></span>
 						</div>
 						<div class="col-lg-2 col-md-4 col-sm-4 col-ms-4 col-xs-6 tile_stats_count ellipsis">
 							<span class="count_top"><i class="fa fa-dashboard"></i> <?= $_msg->lang("Mbits Sold"); ?></span>
-							<div class="count">00</div>
-							<span class="count_bottom"><strong>00</strong> <?= $_msg->lang("Upload"); ?></span>
+							<div class="count">0</div>
+							<span class="count_bottom"><strong>0</strong> <?= $_msg->lang("Upload"); ?></span>
 						</div>
 						<div class="col-lg-2 col-md-4 col-sm-4 col-ms-4 col-xs-6 tile_stats_count ellipsis">
 							<span class="count_top"><i class="fa fa-tags"></i> <?= $_msg->lang("Open Tickets"); ?></span>
-							<div class="count">00</div>
-							<span class="count_bottom"><strong>00</strong> <?= $_msg->lang("This Month"); ?></span>
+							<div class="count"><a href="./?p=33">0</a></div>
+							<span class="count_bottom"><strong>0</strong> <?= $_msg->lang("This Month"); ?></span>
 						</div>
 						<div class="col-lg-2 col-md-4 col-sm-4 col-ms-4 col-xs-6 tile_stats_count ellipsis">
 							<span class="count_top"><i class="fa fa-thumbs-o-up"></i> <?= $_msg->lang("Solved Tickets"); ?></span>
-							<div class="count">00</div>
+							<div class="count"><a href="./?p=33&closed">0</a></div>
 							<span class="count_bottom">
-								<strong class="red">00</strong> <span class="red"><?= $_msg->lang("Late Tickets"); ?></span>
+								<strong class="red">0</strong> <span class="red"><?= $_msg->lang("Late Tickets"); ?></span>
 							</span>
 						</div>
 					</div>
@@ -101,8 +101,18 @@
 									if (response[0]!='[') alertPNotify ('alert-danger', response, 5000);
 									else {
 										var tilesInfo = JSON.parse(response);
-										$(".row.tile_count div.count").each(function (index, element) { $(element).html(tilesInfo[index*2]) });
-										$(".row.tile_count strong").each(function (index, element) { $(element).html(tilesInfo[(index*2)+1]) });
+										numberAnimate($(".row.tile_count div.count:nth(0) a"), $(".row.tile_count div.count:nth(0) a").html(), tilesInfo[0]);
+										numberAnimate($(".row.tile_count strong:nth(0)"), $(".row.tile_count strong:nth(0)").html(), tilesInfo[1]);
+										numberAnimate($(".row.tile_count div.count:nth(1)"), $(".row.tile_count div.count:nth(1)").html(), tilesInfo[2]);
+										numberAnimate($(".row.tile_count strong:nth(1)"), $(".row.tile_count strong:nth(1)").html(), tilesInfo[3]);
+										numberAnimate($(".row.tile_count div.count:nth(2) a"), $(".row.tile_count div.count:nth(2) a").html(), tilesInfo[4]);
+										numberAnimate($(".row.tile_count strong:nth(2)"), $(".row.tile_count strong:nth(2)").html(), tilesInfo[5]);
+										numberAnimate($(".row.tile_count div.count:nth(3)"), $(".row.tile_count div.count:nth(3)").html(), tilesInfo[6]);
+										numberAnimate($(".row.tile_count strong:nth(3)"), $(".row.tile_count strong:nth(3)").html(), tilesInfo[7]);
+										numberAnimate($(".row.tile_count div.count:nth(4) a"), $(".row.tile_count div.count:nth(4) a").html(), tilesInfo[8]);
+										numberAnimate($(".row.tile_count strong:nth(4)"), $(".row.tile_count strong:nth(4)").html(), tilesInfo[9]);
+										numberAnimate($(".row.tile_count div.count:nth(5) a"), $(".row.tile_count div.count:nth(5) a").html(), tilesInfo[10]);
+										numberAnimate($(".row.tile_count strong:nth(5)"), $(".row.tile_count strong:nth(5)").html(), tilesInfo[11]);
 									} setTimeout('home_fillTilesInfo()', 30*1000);
 								}
 							});

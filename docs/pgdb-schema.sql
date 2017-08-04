@@ -99,7 +99,8 @@ CREATE TABLE at_ticket_messages (
    user_id integer NOT NULL,
    priority integer NOT NULL,
    message text NOT NULL,
-   status boolean NOT NULL DEFAULT TRUE
+   status boolean NOT NULL DEFAULT TRUE,
+	target_id integer
 );
 
 CREATE TABLE at_ticket_sitrep (

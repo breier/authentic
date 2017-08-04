@@ -44,7 +44,7 @@
 					$td_fourth = $groupname_array[$priority_zero_index];
 				} else $td_fourth = $info_array['username'];
 			}
-			if(!filter_var($ip_address, FILTER_VALIDATE_IP) === false) {
+			if(filter_var($ip_address, FILTER_VALIDATE_IP) !== FALSE && !$disabled) {
 				$td_status = "<a href=\"http://$ip_address/\" title=\"". $_msg->lang("Access Device");
 				$td_status.= "\" target=\"_blank\">". $_msg->lang("connected") ."</a>";
 			} else $td_status = '<i class="red">'. $_msg->lang("disconnected") .'</i>';

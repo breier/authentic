@@ -66,20 +66,20 @@
 		$_pgobj->query_params($query, array($customer_id, intval($_POST['category']), $subject, $deadline_string));
 		if($_pgobj->rows) $ticket_id = $_pgobj->result[0]['id'];
 		else $_msg->error("Could not open ticket!");
-		$query = 'INSERT INTO at_ticket_messages (ticket_id, user_id, priority, message) VALUES ($1, $2, $3, $4)';
+		$query = 'INSERT INTO at_ticket_messages (ticket_id, user_id, priority, message, target_id) VALUES ($1, $2, $3, $4, $5)';
 		// --- Make sure the message is not uppercase
 		$message = pg_escape_string($_POST['message']);
 		$upper_message = mb_strtoupper($message, 'UTF-8');
 		similar_text($upper_message, $message, $percent);
 		if($percent > 20) $message = ucfirst(mb_strtolower($message, 'UTF-8'));
 		// --- Insert the Ticket Message
-		$_pgobj->query_params($query, array($ticket_id, $_session->id, intval($_POST[	'priority']), $message));
+		$_pgobj->query_params($query, array($ticket_id, $_session->id, intval($_POST[	'priority']), $message, intval($_POST['target'])));
 		if($_pgobj->rows) $success = $_msg->lang("Ticket opened with success!");
 		else $_msg->error("Could not open ticket!");
 	}
 	// ----- Deal with updates posted in a ticket ----- //
 	if(isset($_POST['ticket_id'])) {
-		$query = 'INSERT INTO at_ticket_messages (ticket_id, user_id, priority, message, status) VALUES ($1, $2, $3, $4, $5)';
+		$query = 'INSERT INTO at_ticket_messages (ticket_id, user_id, priority, message, status, target_id) VALUES ($1, $2, $3, $4, $5, $6)';
 		$ticket_status = (isset($_POST['close'])) ? ("false") : ("true");
 		// --- Make sure the message is not uppercase
 		$message = pg_escape_string($_POST['message']);
@@ -87,7 +87,7 @@
 		similar_text($upper_message, $message, $percent);
 		if($percent > 20) $message = ucfirst(mb_strtolower($message, 'UTF-8'));
 		// --- Insert the Ticket Message
-		$_pgobj->query_params($query, array($_POST['ticket_id'], $_session->id, intval($_POST['priority']), $message, $ticket_status));
+		$_pgobj->query_params($query, array($_POST['ticket_id'], $_session->id, intval($_POST['priority']), $message, $ticket_status, intval($_POST['target'])));
 		if($_pgobj->rows == 0) $_msg->error("Could not add message to the ticket!");
 		$query = 'UPDATE at_tickets SET category = $1, deadline = $2 WHERE id = $3';
 		// --- Update Ticket anyway
@@ -206,8 +206,8 @@
 	} else {
 		// ----- Display Insert OR Update Tickets Form ----- //
 		if(isset($_GET['tid'])) {
-			$query = "WITH alm AS (SELECT DISTINCT ON (ticket_id) ticket_id, priority, status FROM at_ticket_messages ORDER BY ticket_id, date DESC)";
-			$query.= " SELECT at.*, alm.priority, alm.status FROM at_tickets at, alm WHERE at.id = alm.ticket_id AND at.id = \$1";
+			$query = "WITH alm AS (SELECT DISTINCT ON (ticket_id) ticket_id, priority, status, target_id FROM at_ticket_messages ORDER BY ticket_id, date DESC)";
+			$query.= " SELECT at.*, alm.priority, alm.status, alm.target_id FROM at_tickets at, alm WHERE at.id = alm.ticket_id AND at.id = \$1";
 			$_pgobj->query_params($query, array($_GET['tid']));
 			if($_pgobj->rows == 0) $_msg->error("Could not open ticket!");
 			$ticket_array = $_pgobj->result[0];
@@ -220,7 +220,7 @@
 		} else {
 			$ticket_title = $_msg->lang("Open Ticket");
 			$input_hidden = array("customer_id", $_GET['cid']);
-			$ticket_array = array('category' => 0, 'priority' => round(count($_settings->ticket_priority)/2), 'subject' => '');
+			$ticket_array = array('category' => NULL, 'priority' => round(count($_settings->ticket_priority)/2), 'subject' => '', 'target_id' => NULL);
 			$deadline_string = date("$date_format H:i", (round(strtotime('+1 day')/1800) * 1800));
 			$subject_disable = '';
 			$customer_id = ($_GET['cid']) ? (intval($_GET['cid'])) : (FALSE);
@@ -342,10 +342,19 @@
 									</div>
 								</div><div class="clearfix"></div>
 								<div class="form-group">
-									<div class="col-xs-12">
+									<div class="col-md-6 col-sm-6 col-ms-6 col-xs-12">
 										<label class="col-xs-12" for="subject"><?= $_msg->lang("Subject"); ?></label>
-									</div><div class="col-xs-12">
 										<input id="subject" name="subject" tabindex="3" style="margin-bottom: 10px;" class="form-control" type="text" value="<?= $ticket_array['subject']; ?>" required="" <?= $subject_disable; ?>>
+									</div><div class="col-md-6 col-sm-6 col-ms-6 col-xs-12" style="margin-bottom: 10px;">
+										<label class="col-xs-12" for="target"><?= $_msg->lang("Target"); ?></label>
+										<select id="target" name="target" tabindex="4" class="form-control selectpicker" multiple data-max-options=1 >
+<?php	// --- Display Admins and Technicians to be targeted
+		$_pgobj->query("SELECT * FROM at_technicians WHERE id > 0 ORDER BY id");
+		for($i=0; $i<$_pgobj->rows; $i++) {
+			$is_selected = ($ticket_array['target_id'] == $_pgobj->result[$i]['id']) ? ('selected="true"') : (''); ?>
+											<option value="<?= $_pgobj->result[$i]['id']; ?>" <?= $is_selected; ?> ><?= $_pgobj->result[$i]['name']; ?></option>
+<?php	} ?>
+										</select>
 									</div>
 								</div><div class="clearfix"></div>
 								<div class="form-group">
@@ -354,13 +363,13 @@
 										<input id="deadline" name="deadline" type="text" tabindex="-1" value="<?= $deadline_string; ?>" class="form-control" data-date-format="<?= $date_format; ?>">
 									</div><div class="col-md-5 col-sm-5 col-ms-9 col-xs-12" style="margin-bottom: 10px;">
 										<label class="col-xs-12" for="message"><?= $_msg->lang("Message"); ?></label>
-										<textarea id="message" name="message" tabindex="4" class="form-control" required="" style="resize: none;" rows="6"></textarea>
+										<textarea id="message" name="message" tabindex="5" class="form-control" required="" style="resize: none;" rows="6"></textarea>
 									</div>
 								</div><div class="clearfix"></div>
 								<div class="form-group">
 									<div class="col-md-6 col-sm-6 col-ms-6 col-xs-12">
 <?php	if(isset($_GET['tid'])) { ?>
-										<input type="checkbox" name="close" id="close" tabindex="5" class="checkbox ticket" <?= $status_check; ?> />
+										<input type="checkbox" name="close" id="close" tabindex="6" class="checkbox ticket" <?= $status_check; ?> />
 										<span class="custom-checkbox"></span>
 										<label class="label-checkbox ticket" for="close"><?= $_msg->lang("Close Ticket!"); ?></label>
 <?php	} ?>
@@ -430,7 +439,7 @@
 							<script type="text/javascript">
 								$(function () {
 								// --- Fancify Select Elements as Buttons
-									$(".selectpicker").selectpicker();
+									$(".selectpicker").selectpicker({ noneSelectedText: '<?= $_msg->lang("Nothing Selected"); ?>' });
 <?php if(isset($_GET['cid']) || isset($_GET['tid'])) { ?>
 									$("#deadline").datetimepicker({ // --- Initialize TimeDatePicker Calendar
 										i18n: { en: { months: <?= json_encode($months); ?>, dayOfWeekShort: <?= json_encode($days_week); ?>}},

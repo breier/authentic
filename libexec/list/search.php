@@ -63,7 +63,8 @@
 						if(isset($_settings->system['Date Format']))
 							$pg_date_format = str_replace(array('d', 'm', 'Y'), array('DD', 'MM', 'YYYY'), $_settings->system['Date Format']);
 						else $pg_date_format = 'MM/DD/YYYY';
-						$query.= " AND ( array_to_string(aua.groupname, ' ') ILIKE '%". $search_string ."%'";
+						$query.= " AND ( CASE WHEN aua.groupname && ARRAY['disabled'] THEN '". strtolower($_msg->lang("Disabled")) ."' ILIKE '%";
+						$query.= $search_string ."%' ELSE array_to_string(aua.groupname, ' ') ILIKE '%". $search_string ."%' END";
 						$query.= ' OR substring(aud.data from \':"name";s:[0-9]+:"([^"]+)";\') ILIKE \'%'. $search_string .'%\'';
 						$query.= " OR to_char(aud.date, '$pg_date_format') ILIKE '%". $search_string ."%'";
 						$query.= " OR text(aua.mac_address) ILIKE '%". $search_string ."%'";

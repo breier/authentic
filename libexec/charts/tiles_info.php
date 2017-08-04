@@ -16,7 +16,7 @@
 		$month_customers = $_pgobj->result[0]['month_customers'];
 		// OnLine / OffLine
 		$query = "SELECT COUNT(username) AS online_customers FROM at_framedipaddress_accounts";
-		$query.= " WHERE username NOT IN (SELECT username FROM at_userauth WHERE groupname && ARRAY['full', 'admn', 'tech'])";
+		$query.= " WHERE username NOT IN (SELECT username FROM at_userauth WHERE groupname && ARRAY['full', 'admn', 'tech', 'disabled'])";
 		$query.= " AND framedipaddress IS NOT NULL";
 		$_pgobj->query($query);
 		$online_customers = $_pgobj->result[0]['online_customers'];
@@ -82,12 +82,12 @@
 		$_pgobj->query($query);
 		$late_tickets = $_pgobj->result[0]['late_tickets'];
 		// Reply JSON with ordered data
-		$output_array = array(	"<a href=\"./?p=10\">$total_customers</a>", $month_customers,
+		$output_array = array(	$total_customers, $month_customers,
 										$online_customers, $offline_customers,
 										$disabled_customers, $disabled_month,
 										$total_sold_mbits_download, $total_sold_mbits_upload,
-										"<a href=\"./?p=33\">$total_open_tickets</a>", $month_open_tickets,
-										"<a href=\"./?p=33&closed\">$solved_tickets</a>", $late_tickets );
+										$total_open_tickets, $month_open_tickets,
+										$solved_tickets, $late_tickets );
 		echo json_encode($output_array);
 	}
 ?>

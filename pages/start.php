@@ -122,8 +122,28 @@
 									<li><a href="./?p=off"><i class="fa fa-sign-out"></i> <?= $_msg->lang("Sign Out"); ?></a></li>
 								</ul>
 							</li>
+<?php	$_pgobj->query("SELECT ticket_id, priority, message FROM at_ticket_messages WHERE target_id = $_session->id AND status ORDER BY date DESC");
+		if($_pgobj->rows) { ?>
 							<li class="dropdown">
-								<a class="user-session ellipsis dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+								<a class="mail dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+									<i class="fa fa-envelope-o"></i>
+									<span class="mail-alert"></span>
+								</a>
+								<ul class="mail dropdown-menu">
+<?php		for($i=0; $i<$_pgobj->rows; $i++) {
+				$priority_data = $_settings->ticket_priority[$_pgobj->result[$i]['priority']]; ?>
+									<li>
+										<a href="./?p=33&tid=<?= $_pgobj->result[$i]['ticket_id']; ?>">
+											<i class="fa fa-circle" style="color: <?= $priority_data['color']; ?>;" title="<?= $_msg->lang($priority_data['title']); ?>"></i>
+											<div class="ellipsis"><?= $_pgobj->result[$i]['message']; ?></div>
+										</a>
+									</li>
+<?php		} ?>
+								</ul>
+							</li>
+<?php	} ?>
+							<li class="dropdown">
+								<a class="language dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 									<i class="fa fa-globe"></i>
 									<span class="hide-xxs"> <?= $_msg->lang("Language"); ?></span>
 									<span class="fa fa-angle-down pull-right"></span>

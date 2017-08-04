@@ -355,6 +355,18 @@ ul.nav.child_menu li:after {
 	text-align: center;
 	color: var(--darkGrey);
 }
+.navbar-nav .mail { padding-right: 13px; }
+.navbar-nav .mail .mail-alert {
+	top: 18px;
+	right: 8px;
+	position: absolute;
+	background-color: var(--customRed);
+	border: solid 2px var(--lightGrey);
+	border-radius: 50%;
+	height: 11px;
+	width: 11px;
+}
+.navbar-nav .language { min-width: 60px; }
 .navbar-nav .dropdown-menu {
 	position: absolute !important;
 	margin: 0;
@@ -364,6 +376,17 @@ ul.nav.child_menu li:after {
 	box-shadow: none !important;
 }
 .navbar-nav .dropdown-menu>li>a { padding: 3px 20px !important; }
+.navbar-nav .dropdown-menu.mail i { padding: 0; }
+.navbar-nav .dropdown-menu.mail li:nth-of-type(n+2) {
+   border-top: dashed 1px #DDD;
+}
+.navbar-nav .dropdown-menu.mail div {
+	display: inline-block;
+	padding: 0 0 5px 10px;
+	max-width: 160px;
+	line-height: 34px;
+	vertical-align: middle;
+}
 .navbar-nav .dropdown-menu#langset a { line-height: 39px; }
 .navbar-nav .dropdown-menu#langset {
 	min-width: 120px;
@@ -731,6 +754,15 @@ input + span.form-control-feedback.smart-delete {
 	#name_select>div>label { display: none; }
 }
 /*** Everything fot Manage Plans Page ***/
+button.table_addon {
+	position: absolute;
+	background: none;
+	border: none;
+	right: 18px;
+	margin-top: 4px;
+	font-size: 20px;
+	color: var(--lightBackground);
+}
 #plans_table tbody tr td:first-of-type { padding: 0; }
 #plans_table tbody td a {
 	position: relative;
