@@ -62,7 +62,7 @@
 												<?= $_msg->lang("MAC Address"); ?>
 											</label>
 											<div class="col-md-6 col-sm-6 col-ms-6 col-xs-12">
-												<input type="text" name="mac_address" id="mac_address" data-error="<?= $_msg->lang('Invalid MAC Address!'); ?>" value="<?= $mac_address; ?>" data-inputmask="'mask': '**:**:**:**:**:**'" onblur='$("#check_mac_address").val(this.value);' class="form-control col-md-7 col-xs-12"/>
+												<input type="text" name="mac_address" id="mac_address" data-error="<?= $_msg->lang('Invalid MAC Address!'); ?>" value="<?= $mac_address; ?>" mac-mask="true" onblur='$("#check_mac_address").val(this.value);' class="form-control col-md-7 col-xs-12"/>
 											</div>
 										</div><div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-ms-3 col-xs-12" for="connection">
@@ -76,7 +76,7 @@
 												<?= $_msg->lang("Full Name"); ?>
 											</label>
 											<div class="col-md-6 col-sm-6 col-ms-6 col-xs-12">
-												<input type="text" name="name" id="name" autocomplete="off" data-error="<?= $_msg->lang('Invalid Name!'); ?>" class="form-control col-md-7 col-xs-12"/>
+												<input type="text" name="name" id="name" autocomplete="off" autocorrect="off" autocapitalize="words" data-error="<?= $_msg->lang('Invalid Name!'); ?>" class="form-control col-md-7 col-xs-12"/>
 											</div>
 										</div><div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-ms-3 col-xs-12" for="password">
@@ -96,7 +96,7 @@
 									<div id="2" style="display: none;">
 <?php	$required_form_fields = array();
 		foreach($_settings->form_field as $form_field_label => $form_field_data) {
-			$mask = ($form_field_data['mask']) ? ("data-inputmask=\"'mask': '". $form_field_data['mask'] ."', 'greedy': false\"") : ("");
+			$mask = ($form_field_data['mask']) ? ("data-mask=\"$form_field_data[mask]\"") : ("");
 			if($form_field_data['validation']) {
 				$require = 'data-validate="'. $form_field_data['validation'] .'" ';
 				$require.= 'data-error="'. $_msg->lang("Invalid $form_field_data[title]!");
@@ -185,7 +185,7 @@
 								</div>
 							</form>
 							<script src="<?= $_path->js; ?>/bootstrap-select.min.js"></script>
-							<script src="<?= $_path->js; ?>/jquery.inputmask.bundle.min.js"></script>
+							<script src="<?= $_path->js; ?>/jquery.mask.min.js"></script>
 							<script type="text/javascript">
 <?php		if($_session->groupname=='tech') { ?>
 							//	$("#mac_address").attr('disabled', 'disabled');
@@ -201,8 +201,8 @@
 								});
 								$("#check_plan").val($('#plan').val());
 								$("#check_mac_address").val($('#mac_address').val());
+								$('input[mac-mask]').mask('HH:HH:HH:HH:HH:HH', {translation:  {'H': {pattern: /[a-fA-F0-9]/}}});
 								$(".selectpicker").selectpicker();
-								$(".form-horizontal input[data-inputmask]").inputmask();
 								list_handleDuplicates($("#2"));
 							</script>
 							<div id="modal_confirm" class="modal fade" role="dialog">

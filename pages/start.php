@@ -122,7 +122,11 @@
 									<li><a href="./?p=off"><i class="fa fa-sign-out"></i> <?= $_msg->lang("Sign Out"); ?></a></li>
 								</ul>
 							</li>
-<?php	$_pgobj->query("SELECT ticket_id, priority, message FROM at_ticket_messages WHERE target_id = $_session->id AND status ORDER BY date DESC");
+<?php	// --- Tickets List Query for session user
+		$query = "WITH alm AS (SELECT DISTINCT ON (ticket_id) ticket_id, priority, status, target_id FROM at_ticket_messages ORDER BY ticket_id, date DESC)";
+		$query.= " SELECT at.id, at.category, at.subject, at.deadline, alm.priority FROM alm, at_tickets at";
+		$query.= " WHERE at.id = alm.ticket_id AND alm.target_id = ". intval($_session->id) ." AND alm.status ORDER BY at.deadline DESC";
+		$_pgobj->query($query);
 		if($_pgobj->rows) { ?>
 							<li class="dropdown">
 								<a class="mail dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -133,9 +137,9 @@
 <?php		for($i=0; $i<$_pgobj->rows; $i++) {
 				$priority_data = $_settings->ticket_priority[$_pgobj->result[$i]['priority']]; ?>
 									<li>
-										<a href="./?p=33&tid=<?= $_pgobj->result[$i]['ticket_id']; ?>">
+										<a href="./?p=33&tid=<?= $_pgobj->result[$i]['id']; ?>">
 											<i class="fa fa-circle" style="color: <?= $priority_data['color']; ?>;" title="<?= $_msg->lang($priority_data['title']); ?>"></i>
-											<div class="ellipsis"><?= $_pgobj->result[$i]['message']; ?></div>
+											<div class="ellipsis"><?= $_pgobj->result[$i]['subject']; ?></div>
 										</a>
 									</li>
 <?php		} ?>

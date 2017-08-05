@@ -234,7 +234,7 @@
 									</div>
 									<label class="control-label col-md-4 col-sm-4 col-xs-4" for="username_<?= $provisioning_label; ?>"><?= $_msg->lang("Username"); ?></label>
 									<div class="col-md-8 col-sm-8 col-xs-8">
-										<input type="text" name="username" id="username_<?= $provisioning_label; ?>" value="<?= $provisioning_data['username']; ?>" required="" class="form-control"/>
+										<input type="text" name="username" id="username_<?= $provisioning_label; ?>" value="<?= $provisioning_data['username']; ?>" autocorrect="off" autocapitalize="none" required="" class="form-control"/>
 									</div>
 									<label class="control-label col-md-4 col-sm-4 col-xs-4" for="password_<?= $provisioning_label; ?>"><?= $_msg->lang("Password"); ?></label>
 									<div class="col-md-8 col-sm-8 col-xs-8">
@@ -430,7 +430,7 @@
 													</div>
 													<label class="control-label col-md-4 col-sm-4 col-xs-4" for="username"><?= $_msg->lang("Username"); ?></label>
 													<div class="col-md-8 col-sm-8 col-xs-8">
-														<input type="text" name="username" id="username" required="" class="form-control"/>
+														<input type="text" name="username" id="username" autocorrect="off" autocapitalize="none" required="" class="form-control"/>
 													</div>
 													<label class="control-label col-md-4 col-sm-4 col-xs-4" for="password"><?= $_msg->lang("Password"); ?></label>
 													<div class="col-md-8 col-sm-8 col-xs-8">

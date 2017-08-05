@@ -123,7 +123,7 @@ CREATE TABLE at_onts (
 	gpon_slot text NOT NULL,
 	gpon_port integer NOT NULL,
 	ont_id integer NOT NULL,
-	ont_sn text NOT NULL,
+	ont_sn text UNIQUE NOT NULL,
 	ont_wan_mode text NOT NULL,
 	date timestamp without time zone DEFAULT now() NOT NULL
 );
@@ -167,7 +167,7 @@ CREATE VIEW at_groupname_changes AS
 	SELECT username, groupname, max(acctstarttime) AS date
 	FROM radacct
 	GROUP BY username, groupname
-	ORDER BY username
+	ORDER BY username;
 
 CREATE VIEW at_duplicated_active_accounts AS
    SELECT accounting.username, accounting.dup

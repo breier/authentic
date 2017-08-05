@@ -96,7 +96,7 @@
 												<?= $_msg->lang("Username") ."\n"; ?>
 											</label>
 											<div class="col-md-6 col-sm-6 col-ms-6 col-xs-12">
-												<input type="text" name="username" id="username" data-error="<?= $_msg->lang('Invalid Username!'); ?>" class="form-control col-md-7 col-xs-12"/>
+												<input type="text" name="username" id="username" autocorrect="off" autocapitalize="none" data-error="<?= $_msg->lang('Invalid Username!'); ?>" class="form-control col-md-7 col-xs-12"/>
 											</div>
 										</div><div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-ms-3 col-xs-12" for="password">
@@ -136,7 +136,7 @@
 												<?= $_msg->lang("MAC Address"); ?>
 											</label>
 											<div class="col-md-6 col-sm-6 col-ms-6 col-xs-12">
-												<input type="text" name="mac_address" id="mac_address" data-error="<?= $_msg->lang('Invalid MAC Address!'); ?>" data-inputmask="'mask': '**:**:**:**:**:**'" onblur='$("#check_mac_address").val(this.value);' class="form-control col-md-7 col-xs-12"/>
+												<input type="text" name="mac_address" id="mac_address" data-error="<?= $_msg->lang('Invalid MAC Address!'); ?>" mac-mask="true" onblur='$("#check_mac_address").val(this.value);' class="form-control col-md-7 col-xs-12"/>
 											</div>
 										</div><div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-ms-3 col-xs-12" for="location">
@@ -186,14 +186,14 @@
 									</div>
 								</div>
 							</form>
-							<script src="<?= $_path->js; ?>/jquery.inputmask.bundle.min.js"></script>
+							<script src="<?= $_path->js; ?>/jquery.mask.min.js"></script>
 							<script src="<?= $_path->js; ?>/bootstrap-select.min.js"></script>
 							<script type="text/javascript">
 								$(function () {
 								// Prepare document loading animation
 									$(document).ajaxStart(function (){ $('.fa-spin').css("visibility", 'visible'); })
 													.ajaxStop(function (){ $('.fa-spin').css("visibility", 'hidden'); });
-									$("#2 input[data-inputmask]").inputmask();
+									$('input[mac-mask]').mask('HH:HH:HH:HH:HH:HH', {translation:  {'H': {pattern: /[a-fA-F0-9]/}}});
 									$(".selectpicker").selectpicker();
 								});
 							</script>

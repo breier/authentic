@@ -12,7 +12,9 @@
 		// Total Customers
 		$_pgobj->query("SELECT COUNT(username) AS total_customers FROM at_userauth WHERE NOT groupname && ARRAY['full', 'admn', 'tech']");
 		$total_customers = $_pgobj->result[0]['total_customers'];
-		$_pgobj->query("SELECT COUNT(username) AS month_customers FROM at_userdata WHERE date > DATE_TRUNC('month', now())");
+		$query = "SELECT COUNT(aua.username) AS month_customers FROM at_userauth aua LEFT JOIN at_userdata aud ON aua.username = aud.username";
+		$query.= " WHERE NOT aua.groupname && ARRAY['full', 'admn', 'tech'] AND aud.date > DATE_TRUNC('month', now())";
+		$_pgobj->query($query);
 		$month_customers = $_pgobj->result[0]['month_customers'];
 		// OnLine / OffLine
 		$query = "SELECT COUNT(username) AS online_customers FROM at_framedipaddress_accounts";
@@ -36,6 +38,8 @@
 		// Mbits Sold
 		$plans = array();
 		$customers_per_plan = array();
+		$total_sold_mbits_download = 0;
+		$total_sold_mbits_upload = 0;
 		$query = "SELECT COUNT(groupname) AS customers_per_plan, array_to_json(groupname) AS groupname, array_to_json(priority) AS priority";
 		$query.= " FROM at_userauth WHERE NOT groupname && ARRAY['full', 'admn', 'tech', 'disabled'] GROUP BY groupname, priority";
 		$_pgobj->query($query);
@@ -56,9 +60,9 @@
 				$first_slash_position = substr($_pgobj->result[0]['value'], strpos($_pgobj->result[0]['value'], '/'));
 				$sold_bits_download[] = intval(substr($first_slash_position, 1, strpos($first_slash_position, ' '))) * $customers_per_plan[$i];
 				$sold_bits_upload[] = intval($_pgobj->result[0]['value']) * $customers_per_plan[$i];
-			}
-		} $total_sold_mbits_download = round(array_sum($sold_bits_download) / (1024 * 1024));
-		$total_sold_mbits_upload = round(array_sum($sold_bits_upload) / (1024 * 1024));
+			} $total_sold_mbits_download = round(array_sum($sold_bits_download) / (1024 * 1024));
+			$total_sold_mbits_upload = round(array_sum($sold_bits_upload) / (1024 * 1024));
+		}
 		// Total Open Tickets
 		$query = "WITH alm AS (SELECT DISTINCT ON (ticket_id) ticket_id, status FROM at_ticket_messages ORDER BY ticket_id, date DESC)";
 		$query.= " SELECT COUNT (id) AS total_open_tickets FROM at_tickets at, alm";

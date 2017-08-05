@@ -345,7 +345,11 @@ ul.nav.child_menu li:after {
 	border-radius: 50%;
 	background-size: cover !important;
 }
-.navbar-nav>li span.fa { margin: 10px -12px 0 0; }
+.navbar-nav>li span.fa {
+	position: absolute;
+	right: 8px;
+	top: 23px;
+}
 .navbar-nav>li span#timeout_counter {
 	position: absolute;
 	top: 37px;
@@ -366,7 +370,6 @@ ul.nav.child_menu li:after {
 	height: 11px;
 	width: 11px;
 }
-.navbar-nav .language { min-width: 60px; }
 .navbar-nav .dropdown-menu {
 	position: absolute !important;
 	margin: 0;
@@ -566,8 +569,11 @@ input + span.form-control-feedback.smart-delete {
 }
 #users_table tbody tr.disabled a, #users_table tbody tr.disabled i { color: var(--darkYellow) !important; }
 #users_table tbody tr td:first-of-type, #users_table tbody tr td:last-of-type { padding: 0; }
-#users_table tbody tr td:last-of-type i { line-height: 34px; }
 #users_table tbody tr td:last-of-type a { color: var(--lightGreen); }
+#users_table tbody tr td:last-of-type i {
+	line-height: 34px;
+	padding: 8px;
+}
 #users_table tbody td a {
 	position: relative;
 	display: block;

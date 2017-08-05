@@ -12,13 +12,20 @@
 	if(!isset($_pgobj)) $_msg->error("Class PgSQL not set!");
 	if(!isset($_path)) $_msg->error("Class Path not set!");
 	if(!isset($_settings)) $_msg->error("Class Settings not set!");
+	// ----- Defining Links to other pages ----- //
+	$link_list_customers = './?p=10';
+	$link_helpdesk = './?p=33';
+	$link_add_customers = './?p=20';
+	$link_form_fields = './?p=41';
+	$link_add_admin = './?p=22';
+	$link_manage_plans = './?p=32';
 ?>
 					<div class="row tile_count">
 						<div class="col-lg-2 col-md-4 col-sm-4 col-ms-4 col-xs-6 tile_stats_count ellipsis">
 							<span class="count_top"><i class="fa fa-users"></i> <?= $_msg->lang("Registrations"); ?></span>
-							<div class="count"><a href="./?p=10">0</a></div>
+							<div class="count"><a href="<?= $link_list_customers; ?>">0</a></div>
 							<span class="count_bottom">
-								<a href="./?p=10#<?= date('m/Y'); ?>#1#2d">
+								<a href="<?= $link_list_customers .'#'. date('m/Y') .'#1#2d'; ?>">
 									<strong class="green">0</strong> <span class="green"><?= $_msg->lang("This Month"); ?></span>
 								</a>
 							</span>
@@ -27,14 +34,14 @@
 							<span class="count_top"><i class="fa fa-check-circle-o"></i> <?= $_msg->lang("On Line"); ?></span>
 							<div class="count green">0</div>
 							<span class="count_bottom red">
-								<a href="./?p=10#<?= $_msg->lang('disconnected'); ?>">
+								<a href="<?= $link_list_customers .'#'. $_msg->lang('disconnected'); ?>">
 									<strong class="red">0</strong> <span class="red"><?= $_msg->lang("Off Line"); ?></span>
 								</a>
 							</span>
 						</div>
 						<div class="col-lg-2 col-md-4 col-sm-4 col-ms-4 col-xs-6 tile_stats_count ellipsis">
 							<span class="count_top"><i class="fa fa-times-circle-o"></i> <?= $_msg->lang("Disabled"); ?></span>
-							<div class="count"><a href="./?p=10#<?= strtolower($_msg->lang('Disabled')); ?>">0</a></div>
+							<div class="count"><a href="<?= $link_list_customers .'#'. $_msg->lang('disabled'); ?>">0</a></div>
 							<span class="count_bottom"><strong>0</strong> <?= $_msg->lang("This Month"); ?></span>
 						</div>
 						<div class="col-lg-2 col-md-4 col-sm-4 col-ms-4 col-xs-6 tile_stats_count ellipsis">
@@ -44,12 +51,12 @@
 						</div>
 						<div class="col-lg-2 col-md-4 col-sm-4 col-ms-4 col-xs-6 tile_stats_count ellipsis">
 							<span class="count_top"><i class="fa fa-tags"></i> <?= $_msg->lang("Open Tickets"); ?></span>
-							<div class="count"><a href="./?p=33">0</a></div>
+							<div class="count"><a href="<?= $link_helpdesk; ?>">0</a></div>
 							<span class="count_bottom"><strong>0</strong> <?= $_msg->lang("This Month"); ?></span>
 						</div>
 						<div class="col-lg-2 col-md-4 col-sm-4 col-ms-4 col-xs-6 tile_stats_count ellipsis">
 							<span class="count_top"><i class="fa fa-thumbs-o-up"></i> <?= $_msg->lang("Solved Tickets"); ?></span>
-							<div class="count"><a href="./?p=33&closed">0</a></div>
+							<div class="count"><a href="<?= $link_helpdesk .'&closed'; ?>">0</a></div>
 							<span class="count_bottom">
 								<strong class="red">0</strong> <span class="red"><?= $_msg->lang("Late Tickets"); ?></span>
 							</span>
@@ -91,6 +98,40 @@
 							data: 'ajax=1',
 							success: function (response) { $("#users_ranking_chart").html(response); }
 						});
+					</script>
+<?php	/* ----- Display first use messages at Home Page ----- */
+		if(!count($_settings->form_field)) { ?>
+					<div class="clearfix"></div>
+					<div class="alert alert-warning col-lg-4 col-md-6 col-sm-6 col-cs-12 text-justify">
+						<i class="fa fa-quote-right fa-3x pull-right"></i>
+						<h3 style="margin: 0;"><?= $_msg->lang("Looks like you're new here!"); ?></h3><br />
+						<?= $_msg->lang("I suggest you to add some custom form fields before anything else.") ."\n"; ?>
+						<?= $_msg->lang("We already have the required form fields, though.") ."\n"; ?>
+						<?= $_msg->lang("Like Internet Plan, MAC Address, Full Name and Password.") ."\n"; ?>
+						<?= $_msg->lang("You can have a look") ." <a class=\"strong\" href=\"$link_add_customers\">". $_msg->lang("here") ."</a>.\n"; ?>
+						<?= $_msg->lang("Whenever you're ready, click") ." <a class=\"strong\" href=\"$link_form_fields\">". $_msg->lang("here") .'</a> '; ?>
+						<?= $_msg->lang("to add form fields.") ."\n"; ?>
+					</div>
+<?php	} elseif(!$_pgobj->select("radusergroup", array("groupname" => "admn"))) { ?>
+					<div class="clearfix"></div>
+					<div class="alert alert-warning col-lg-4 col-md-6 col-sm-6 col-cs-12 text-justify">
+						<i class="fa fa-quote-right fa-3x pull-right"></i>
+						<h3 style="margin: 0;"><?= $_msg->lang("Add an Administrator!"); ?></h3><br />
+						<?= $_msg->lang("I suggest you to add administrator user.") ."\n"; ?>
+						<?= $_msg->lang("It's unwise to fool around with so much power.") ."\n"; ?>
+						<?= $_msg->lang("To do the right thing, click") ." <a class=\"strong\" href=\"$link_add_admin\">". $_msg->lang("here") ."</a>.\n"; ?>
+					</div>
+<?php	} elseif(!$_pgobj->select("at_plans", array("id" => ""))) { ?>
+					<div class="clearfix"></div>
+					<div class="alert alert-warning col-lg-4 col-md-6 col-sm-6 col-cs-12 text-justify">
+						<i class="fa fa-quote-right fa-3x pull-right"></i>
+						<h3 style="margin: 0;"><?= $_msg->lang("One last thing!"); ?></h3><br />
+						<?= $_msg->lang("I suggest you to add internet plans.") ."\n"; ?>
+						<?= $_msg->lang("To get <strong>authentic</strong> ready to manage customers you got to have a plan.") ."\n"; ?>
+						<?= $_msg->lang("Add your first plan clicking") ." <a class=\"strong\" href=\"$link_manage_plans\">". $_msg->lang("here") ."</a>.\n"; ?>
+					</div>
+<?php	} ?>
+					<script type="text/javascript">
 					/* ----- Define AJaX request for Tiles Info at Home Page ----- */
 						function home_fillTilesInfo () {
 							$.ajax({

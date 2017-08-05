@@ -59,12 +59,30 @@ Contacts =/= Contatos
 Version =/= Versão
 Developers =/= Desenvolvedores
 
+#Greetings messages
+Looks like you're new here! =/= Parece que você é novo por aqui!
+I suggest you to add some custom form fields before anything else. =/= Eu sugiro que você adicione alguns campos de formulário personalizados antes de qualquer coisa.
+We already have the required form fields, though. =/= Nós já temos os campos obrigatórios, no entanto.
+Like Internet Plan, MAC Address, Full Name and Password. =/= Como Plano de Internet, Endereço MAC, Nome Completo e Senha.
+You can have a look =/= Você pode dar uma olhada
+here =/= aqui
+Whenever you're ready, click =/= Quando estiver pronto, clique
+to add form fields. =/= para adicionar campos de formulário.
+Add an Administrator! =/= Adicione um Administrador!
+I suggest you to add administrator user. =/= Eu sugiro que você adicione um administrador.
+It's unwise to fool around with so much power. =/= É pouco sábio ficar brincando com tanto poder.
+To do the right thing, click =/= Para fazer a coisa certa, clique
+One last thing! =/= Mais uma coisa!
+I suggest you to add internet plans. =/= Eu sugiro que você adicione planos de internet.
+To get <strong>authentic</strong> ready to manage customers you got to have a plan. =/= Para que o <strong>authentic</strong> fique pronto para gerenciar clientes você precisa ter um plano.
+Add your first plan clicking =/= Adicione seu primeiro plano clicando
+
 #Home page messages
 Registrations =/= Cadastros
 This Month =/= Este Mês
 On Line =/= Conectados
 Off Line =/= Desconectados
-Disabled =/= Desabilitados
+Disabled =/= Desativados
 Mbits Sold =/= Mbits Vendidos
 Open Tickets =/= Tickets Abertos
 Solved Tickets =/= Tickets Resolvidos
@@ -125,6 +143,7 @@ IP Address =/= Endereço IP
 No data available in the table! =/= Sem dados na tabela!
 Unauthorized Query! =/= Requisição não autorizada!
 connected =/= conectado
+disabled =/= desativado
 disconnected =/= desconectado
 Invalid Query! =/= Requisição Inválida!
 Show Details =/= Exibir Detalhes
@@ -144,8 +163,8 @@ Couldn't locate user data! =/= Não pôde encontrar dados do usuário!
 Equipment successfully edited! =/= Equipamento editado com sucesso!
 Customer successfully edited! =/= Cliente editado com sucesso!
 User successfully edited! =/= Usuário editado com sucesso!
-Customer successfully disabled! =/= Cliente desabilitado com sucesso!
-User successfully disabled! =/= Usuário desabilitado com sucesso!
+Customer successfully disabled! =/= Cliente desativado com sucesso!
+User successfully disabled! =/= Usuário desativado com sucesso!
 Customer successfully enabled! =/= Cliente habilitado com sucesso!
 User successfully enabled! =/= Usuário habilitado com sucesso!
 NAS not found! =/= NAS não encontrado!
@@ -263,6 +282,7 @@ Category =/= Categoria
 Priority =/= Prioridade
 Subject =/= Assunto
 Target =/= Direcionado
+Nobody =/= Ninguém
 Deadline =/= Prazo Final
 Message =/= Mensagem
 Cancel =/= Cancelar

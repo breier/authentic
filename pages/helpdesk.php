@@ -73,7 +73,8 @@
 		similar_text($upper_message, $message, $percent);
 		if($percent > 20) $message = ucfirst(mb_strtolower($message, 'UTF-8'));
 		// --- Insert the Ticket Message
-		$_pgobj->query_params($query, array($ticket_id, $_session->id, intval($_POST[	'priority']), $message, intval($_POST['target'])));
+		$target_id = ($_POST['target']) ? (intval($_POST['target'])) : (NULL);
+		$_pgobj->query_params($query, array($ticket_id, intval($_session->id), intval($_POST['priority']), $message, $target_id));
 		if($_pgobj->rows) $success = $_msg->lang("Ticket opened with success!");
 		else $_msg->error("Could not open ticket!");
 	}
@@ -87,7 +88,8 @@
 		similar_text($upper_message, $message, $percent);
 		if($percent > 20) $message = ucfirst(mb_strtolower($message, 'UTF-8'));
 		// --- Insert the Ticket Message
-		$_pgobj->query_params($query, array($_POST['ticket_id'], $_session->id, intval($_POST['priority']), $message, $ticket_status, intval($_POST['target'])));
+		$target_id = ($_POST['target']) ? (intval($_POST['target'])) : (NULL);
+		$_pgobj->query_params($query, array($_POST['ticket_id'], intval($_session->id), intval($_POST['priority']), $message, $ticket_status, $target_id));
 		if($_pgobj->rows == 0) $_msg->error("Could not add message to the ticket!");
 		$query = 'UPDATE at_tickets SET category = $1, deadline = $2 WHERE id = $3';
 		// --- Update Ticket anyway
@@ -347,7 +349,8 @@
 										<input id="subject" name="subject" tabindex="3" style="margin-bottom: 10px;" class="form-control" type="text" value="<?= $ticket_array['subject']; ?>" required="" <?= $subject_disable; ?>>
 									</div><div class="col-md-6 col-sm-6 col-ms-6 col-xs-12" style="margin-bottom: 10px;">
 										<label class="col-xs-12" for="target"><?= $_msg->lang("Target"); ?></label>
-										<select id="target" name="target" tabindex="4" class="form-control selectpicker" multiple data-max-options=1 >
+										<select id="target" name="target" tabindex="4" class="form-control selectpicker">
+											<option value=""><?= $_msg->lang("Nobody"); ?></option>
 <?php	// --- Display Admins and Technicians to be targeted
 		$_pgobj->query("SELECT * FROM at_technicians WHERE id > 0 ORDER BY id");
 		for($i=0; $i<$_pgobj->rows; $i++) {
@@ -413,6 +416,7 @@
 			for($i=0; $i<$_pgobj->rows; $i++) {
 				$status_string = ($_pgobj->result[$i]['status'] == 't') ? ("Open") : ("Closed");
 				$date_string = date("$date_format H:i", strtotime($_pgobj->result[$i]['date']));
+				$user_name = ($_pgobj->result[$i]['user_name']) ? ($_pgobj->result[$i]['user_name']) : (" # ". $_msg->lang("System"));
 ?>
 								<div class="list-group-item" data-id="<?= $_pgobj->result[$i]['id']; ?>">
 									<a class="ticket-menu" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
@@ -426,7 +430,7 @@
 									</ul>
 									<h4 class="list-group-item-heading"><?= $date_string; ?> (<?= $_msg->lang($status_string); ?>)</h4>
 									<p class="list-group-item-text">
-										<span><?= $_pgobj->result[$i]['user_name']; ?> - </span><span data-message=""><?= $_pgobj->result[$i]['message']; ?></span>
+										<span><?= $user_name; ?> - </span><span data-message=""><?= $_pgobj->result[$i]['message']; ?></span>
 									</p>
 								</div>
 <?php		} ?>
