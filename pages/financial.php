@@ -53,7 +53,6 @@
 								<tbody>
 <?php	if(count($plans)) {
 			$plan_sold = array(0);
-			sort($plans);
 			for($i=0; $i<count($plans); $i++) {
 				$_pgobj->query_params('SELECT media, price FROM at_plans WHERE name = $1', array($plans[$i]));
 				$plan_price = ($_pgobj->rows) ? ($_pgobj->result[0]['price']) : (0);
