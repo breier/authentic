@@ -47,6 +47,7 @@ Equipment =/= Equipamento
 Tools =/= Ferramentas
 Manage Plans =/= Gerenciar Planos
 Help Desk =/= Balcão de Ajuda
+Fiber Map =/= Mapa da Fibra
 Settings =/= Configurações
 System =/= Sistema
 Form Fields =/= Campos de Formulários
@@ -58,6 +59,14 @@ Help =/= Ajuda
 Contacts =/= Contatos
 Version =/= Versão
 Developers =/= Desenvolvedores
+
+#Profile messages
+Change Password =/= Mudar Senha
+Current Password =/= Senha Atual
+New Password =/= Nova Senha
+Confirm Password =/= Confirmar Senha
+Password successfully updated! =/= Senha atualizada com sucesso!
+Failed to update password! =/= Falhou ao atualizar a senha!
 
 #Greetings messages
 Looks like you're new here! =/= Parece que você é novo por aqui!
@@ -253,6 +262,11 @@ ONT Activate Bridge =/= Ativar ONT Bridge
 Result =/= Resultado
 ONT activated as PPPoE! =/= ONT ativada como PPPoE!
 ONT activated as Bridge! =/= ONT ativada como Bridge!
+
+#Financial Tools Messages
+Total Customers =/= Total de Clientes
+Amount =/= Valor Total
+Average =/= Média
 
 #Manage Plans page messages
 Price =/= Preço

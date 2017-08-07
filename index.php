@@ -34,16 +34,17 @@
 		<link href="<?= $_path->css; ?>/bootstrap.min.css" rel="stylesheet">
 		<link href="<?= $_path->fonts; ?>/font-awesome.min.css" rel="stylesheet">
 		<link href="<?= $_path->css; ?>/animate.min.css" rel="stylesheet">
-		<link href="<?= $_path->css; ?>/custom.css?rev=<?= $_gitrev; ?>" rel="stylesheet">
 		<link href="<?= $_path->css; ?>/pnotify.custom.min.css" rel="stylesheet">
 		<link href="<?= $_path->css; ?>/bootstrap-select.min.css" rel="stylesheet">
 		<link href="<?= $_path->css; ?>/bootstrap-colorpicker.min.css" rel="stylesheet">
 		<link href="<?= $_path->css; ?>/jquery.datetimepicker.min.css" rel="stylesheet">
+		<link href="<?= $_path->css; ?>/leaflet.css" rel="stylesheet">
+		<link href="<?= $_path->css; ?>/custom.css?rev=<?= $_gitrev; ?>" rel="stylesheet">
 		<script src="<?= $_path->js; ?>/jquery.min.js"></script>
 		<!-- Bluefish default meta tags -->
-		<meta name="generator" content="Atom 1.13.1" >
+		<meta name="generator" content="Atom 1.18" >
 		<meta name="author" content="breier" >
-		<meta name="date" content="2017-06-23T11:00:01-0300" >
+		<meta name="date" content="2017-08-06T11:00:01-0300" >
 		<meta name="copyright" content="GPL">
 		<meta name="keywords" content="authentic,radius,administration">
 		<meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
@@ -59,8 +60,10 @@
 		if($page_number>=40 && $page_number<50) $current_page = "$_path->pages/settings.php";
 		if($page_number==20) $current_page = "$_path->pages/register_customers.php";
 		if($page_number==23) $current_page = "$_path->pages/register_equipment.php";
+		if($page_number==31) $current_page = "$_path->pages/financial.php";
 		if($page_number==32) $current_page = "$_path->pages/manage_plans.php";
 		if($page_number==33) $current_page = "$_path->pages/helpdesk.php";
+		if($page_number==34) $current_page = "$_path->pages/fiber_map.php";
 		include("$_path->pages/start.php");
 	} else include("$_path->pages/login.php");
 	$_record->close(); // close log file

@@ -67,8 +67,10 @@
 						<li class="parent"><a><i class="fa fa-wrench"></i> <?= $_msg->lang("Tools"); ?> <span class="fa fa-chevron-down"></span></a>
 							<ul class="nav child_menu" style="display: none">
 								<li><a href="./?p=30"><?= $_msg->lang("Customers"); ?></a></li>
+								<li><a href="./?p=31"><?= $_msg->lang("Financial"); ?></a></li>
 								<li><a href="./?p=32"><?= $_msg->lang("Manage Plans"); ?></a></li>
 								<li><a href="./?p=33"><?= $_msg->lang("Help Desk"); ?></a></li>
+								<li><a href="./?p=34"><?= $_msg->lang("Fiber Map"); ?></a></li>
 							</ul>
 						</li>
 						<li class="parent"><a><i class="fa fa-gear"></i> <?= $_msg->lang("Settings"); ?> <span class="fa fa-chevron-down"></span></a>

@@ -17,7 +17,7 @@
 ?>
 					<div class="x_panel">
 						<div class="x_title">
-							<h2><?= $_msg->lang("Manage Plans"); ?></h2>
+							<h2><?= $_msg->lang("Tools") ." &raquo; ". $_msg->lang("Manage Plans"); ?></h2>
 							<button class="btn btn-primary pull-right strong" onclick='$("#modal_plan_add").modal("show");'><?= $_msg->lang("Add"); ?></button>
 							<div class="clearfix"></div>
 						</div>

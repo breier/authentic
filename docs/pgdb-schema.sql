@@ -128,6 +128,18 @@ CREATE TABLE at_onts (
 	date timestamp without time zone DEFAULT now() NOT NULL
 );
 
+CREATE TABLE at_fiberdata (
+   id serial PRIMARY KEY NOT NULL,
+   date timestamp without time zone DEFAULT now() NOT NULL,
+   type text NOT NULL,
+   category text,
+   color text[] NOT NULL,
+   gpon_slot text,
+	gpon_port integer,
+   location point NOT NULL,
+   path path
+);
+
 CREATE TABLE at_userdata (
    id serial PRIMARY KEY NOT NULL,
    date timestamp without time zone DEFAULT now() NOT NULL,
