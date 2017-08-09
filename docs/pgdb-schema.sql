@@ -125,6 +125,9 @@ CREATE TABLE at_onts (
 	ont_id integer NOT NULL,
 	ont_sn text UNIQUE NOT NULL,
 	ont_wan_mode text NOT NULL,
+	ont_model text NOT NULL,
+	ont_desc text NOT NULL,
+	termination_box integer NOT NULL,
 	date timestamp without time zone DEFAULT now() NOT NULL
 );
 
