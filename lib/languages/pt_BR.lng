@@ -323,6 +323,10 @@ Are you sure you want to delete this message? =/= Você tem certeza que deseja r
 This action is irreversible. =/= Esta ação é irreversível.
 Couldn't delete message! =/= Não pôde remover a mensagem!
 
+#FiberMap page messages
+Fiber Path =/= Caminho de Fibra
+Termination Box =/= Caixa de Terminação Óptica
+
 #Settings page messages
 Add Form Field =/= Adicionar Campo de Formulário
 Add Provisioning =/= Adicionar Provisionamento

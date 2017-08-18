@@ -38,7 +38,6 @@
 		<link href="<?= $_path->css; ?>/bootstrap-select.min.css" rel="stylesheet">
 		<link href="<?= $_path->css; ?>/bootstrap-colorpicker.min.css" rel="stylesheet">
 		<link href="<?= $_path->css; ?>/jquery.datetimepicker.min.css" rel="stylesheet">
-		<link href="<?= $_path->css; ?>/leaflet.css" rel="stylesheet">
 		<link href="<?= $_path->css; ?>/custom.css?rev=<?= $_gitrev; ?>" rel="stylesheet">
 		<script src="<?= $_path->js; ?>/jquery.min.js"></script>
 		<!-- Bluefish default meta tags -->

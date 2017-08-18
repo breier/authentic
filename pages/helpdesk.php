@@ -63,7 +63,7 @@
 		similar_text($upper_subject, $subject, $percent);
 		if($percent > 20) $subject = ucfirst(mb_strtolower($subject, 'UTF-8'));
 		// --- Insert the Ticket
-		$_pgobj->query_params($query, array($customer_id, intval($_POST['category']), $subject, $deadline_string));
+		$_pgobj->query_params($query, array($customer_id, $_POST['category'], $subject, $deadline_string));
 		if($_pgobj->rows) $ticket_id = $_pgobj->result[0]['id'];
 		else $_msg->error("Could not open ticket!");
 		$query = 'INSERT INTO at_ticket_messages (ticket_id, user_id, priority, message, target_id) VALUES ($1, $2, $3, $4, $5)';
@@ -460,6 +460,7 @@
 									$(".xdsoft_datetimepicker").on('generate.xdsoft', null, "input", tools_ticketCalendar);
 <?php	} else { ?>
 									$(".tickets-list i[title]").tooltip(); // --- Initialize Priority Blotches Tooltips
+									$(".ellipsis").each( function (index, element) { $(element).attr("title", $(element).html()); });
 <?php	} if($success) echo str_repeat("\t", 10) ."alertPNotify('alert-success', '$success');\n"; ?>
 								});
 							</script>

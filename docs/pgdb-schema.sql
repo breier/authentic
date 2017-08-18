@@ -87,7 +87,7 @@ CREATE TABLE at_settings (
 CREATE TABLE at_tickets (
    id serial PRIMARY KEY NOT NULL,
    customer_id integer,
-   category integer NOT NULL,
+   category text NOT NULL,
    subject text NOT NULL,
    deadline timestamp without time zone NOT NULL
 );
