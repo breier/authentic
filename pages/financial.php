@@ -14,7 +14,7 @@
 	if(!isset($_pgobj)) $_msg->error("Class PgSQL not set!");
 	if(!isset($_settings)) $_msg->error("Class Settings not set!");
 	// ----- Checking Permissions ----- //
-	if($_session->groupname != 'full') $_msg->warning("You do not have permission to see this page!");
+	if($_session->groupname == 'tech') $_msg->warning("You do not have permission to see this page!");
 	else {
 	// Total Active Customers
 		$_pgobj->query("SELECT COUNT(username) AS total_customers FROM at_userauth WHERE NOT groupname && ARRAY['full', 'admn', 'tech', 'disabled']");
