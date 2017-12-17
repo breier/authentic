@@ -11,7 +11,7 @@
 		if(isset($_POST['action'])) {
 			switch(pg_escape_string($_POST['action'])) {
 				case 'password':
-					$_pgobj->query_params('SELECT username FROM at_userauth WHERE password = $1', array($_POST['current_password']));
+					$_pgobj->query_params('SELECT username FROM at_userauth WHERE password = $1 AND username = $2', array($_POST['current_password'], $_session->username));
 					if($_pgobj->rows == 0) echo json_encode(array("alert-danger", $_msg->lang("Invalid Password!")));
 					elseif($_pgobj->result[0]['username'] != $_session->username) echo json_encode(array("alert-danger", $_msg->lang("Invalid Password!")));
 					else {
