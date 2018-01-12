@@ -23,14 +23,14 @@
 				return TRUE;
 			}
 			$callback = array( "disconnect" => "falloff");
-			$this->method = array( "kex" => "diffie-hellman-group1-sha1" );
+			$this->method = array( "kex" => "diffie-hellman-group-exchange-sha1, diffie-hellman-group14-sha1, diffie-hellman-group1-sha1" );
 			set_time_limit(4);
 
 			$this->conn = ssh2_connect($ip_address, $port, $this->method, $callback);
 			if(!is_resource($this->conn)) return $this->err("Connection Failed!");
 			if(!ssh2_fingerprint($this->conn)) return $this->err("Fingerprint Failed!");
 			if(file_exists($password)) {
-				if(!ssh2_auth_pubkey_file($this->conn, $username, $password, “$password.key”)) return $this->err("Authentication Failed!");
+				if(!ssh2_auth_pubkey_file($this->conn, $username, $password, "$password.key")) return $this->err("Authentication Failed!");
 			} else {
 				if(!ssh2_auth_password($this->conn, $username, $password)) return $this->err("Authentication Failed!");
 			}
