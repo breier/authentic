@@ -7,13 +7,13 @@
 	***********************************************************************/
 
 	if(isset($_POST['ajax']) && isset($_POST['type'])) {
-	//$_msg->wrn($query);
 // ---- Loop Fill Table Rows ----- //
 		$all_rows = array(array('total' => $_pgobj->rows));
 		$current_page = (isset($_POST['page'])) ? (intval($_POST['page'])-1) : (0);
-		$offset = (10 * $current_page);
+		$rows_per_page = (isset($_settings->system['Rows Per Page'])) ? (intval($_settings->system['Rows Per Page'])) : (10);
+		$offset = ($rows_per_page * $current_page);
 		for($i=$offset; $i<$_pgobj->rows; $i++) {
-			if($i == ($offset + 10)) break; // 10 rows per page
+			if($i == ($offset + $rows_per_page)) break;
 			$info_array = $_pgobj->fetch_array($i);
 			if($list_type != 'equipment') {
 				$groupname_array = json_decode($info_array['groupname']);

@@ -20,8 +20,8 @@
 		$_pgobj->query("INSERT INTO at_settings (category, label, data, sequence) VALUES ('system', 'Session Timeout', '0', 1)");
 	if(!$_pgobj->select("at_settings", array("category" => "system", "label" => "Date Format")))
 		$_pgobj->query("INSERT INTO at_settings (category, label, data, sequence) VALUES ('system', 'Date Format', 'm/d/Y', 2)");
-	if(!$_pgobj->select("at_settings", array("category" => "system", "label" => "Redirect URL")))
-		$_pgobj->query("INSERT INTO at_settings (category, label, data, sequence) VALUES ('system', 'Redirect URL', 'http://authentic.breier.net.br/', 3)");
+	if(!$_pgobj->select("at_settings", array("category" => "system", "label" => "Rows Per Page")))
+		$_pgobj->query("INSERT INTO at_settings (category, label, data, sequence) VALUES ('system', 'Rows Per Page', '10', 3)");
 	if(!$_pgobj->select("at_settings", array("category" => "system", "label" => "Main Chart")))
 		$_pgobj->query("INSERT INTO at_settings (category, label, data, sequence) VALUES ('system', 'Main Chart', 'main_throughput', 4)");
 	if(!$_pgobj->select("at_settings", array("category" => "system", "label" => "Data Points")))
