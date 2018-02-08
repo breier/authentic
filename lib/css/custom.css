@@ -589,6 +589,20 @@ input + span.form-control-feedback.smart-delete {
 @media (max-width: 460px) {
 	#users_table tbody td:nth-child(4), #users_table thead th:nth-child(4) { display: none; }
 }
+#pagination .extend_page_btn {
+	position: absolute;
+	bottom: 34px;
+	width: 120px;
+}
+#pagination .extend_page_btn input {
+	border-radius: 4px 0 0 4px;
+	display: inline-block;
+	width: 80px;
+}
+#pagination .extend_page_btn button {
+	border-radius: 0 4px 4px 0;
+	margin-bottom: 1px;
+}
 /*** Customize BootStrap Modal ***/
 .modal-header button.close {
 	padding: 10px 15px;

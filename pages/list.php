@@ -12,6 +12,7 @@
 	if(!isset($_session)) $_msg->error("Class Session not set!");
 	if(!isset($_path)) $_msg->error("Class Paths not set!");
 	// ----- Defining List Page Variables ----- //
+	$rows_per_page = (isset($_settings->system['Rows Per Page'])) ? (intval($_settings->system['Rows Per Page'])) : (10);
 	switch ($page_number) {
 		case 13:	$list_title = $_msg->lang("Equipments");
 					$list_type = "equipment"; break;
@@ -72,8 +73,8 @@
 							</table>
 							<div class="text-center">
 								<button class="btn btn-default" onclick="list_paginate(-1);">&lt;</button>
-								<div id="pagination" class="btn-group"></div>
-								<button class="btn btn-default" onclick="list_paginate(+1);">&gt;</button>
+								<div id="pagination" class="btn-group" data-rows-per-page="<?= $rows_per_page; ?>"></div>
+								<button class="btn btn-default" onclick="list_paginate(0);">&gt;</button>
 							</div>
 						</div>
 					<!-- Show Details Modal /-->
